@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to PLUS | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a; /* Dark navy from image 2 */
+            --panel-dark: #1e293b; /* Sidebar/Card color */
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --code-blue: #38bdf8;
+            --code-yellow: #facc15;
+            --code-red: #f43f5e;
+            --code-green: #10b981;
+            --mono-font: 'Fira Code', monospace;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark); /* Matches image 2 */
+            margin: 0;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER (IDE STYLE) --- */
+        header {
+            background-color: var(--panel-dark);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-size: 26px; font-weight: 800; font-family: var(--mono-font); color: white; cursor: pointer; }
+        .logo span { color: var(--code-blue); font-size: 16px; font-weight: 400; }
+
+        .nav-container {
+            background-color: var(--bg-dark);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            border: 1px solid #334155;
+        }
+
+        .nav-link { 
+            color: var(--text-dim); 
+            text-decoration: none; 
+            padding: 8px 15px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            font-family: var(--mono-font);
+        }
+        .nav-link:hover { color: var(--code-blue); }
+        .active-link { color: var(--code-yellow); }
+        .btn-core { border: 1px solid var(--code-blue); color: var(--code-blue); border-radius: 4px; margin: 0 10px; }
+
+        /* --- STATS BAR --- */
+        .stats-wrapper { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .stats-bar {
+            background: var(--panel-dark); 
+            padding: 15px 30px; 
+            display: flex; 
+            align-items: center;
+            justify-content: space-between; 
+            border-radius: 12px; 
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .profile-section { display: flex; align-items: center; gap: 20px; }
+        .profile-pic {
+            width: 80px; height: 80px; 
+            background: #000; 
+            border-radius: 8px;
+            border: 2px solid #334155;
+            overflow: hidden;
+        }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+
+        .rank-tag { 
+            background: rgba(16, 185, 129, 0.1); color: var(--code-green); 
+            padding: 4px 10px; border-radius: 4px; font-weight: bold; 
+            font-family: var(--mono-font); font-size: 11px; border: 1px solid var(--code-green);
+        }
+
+        .stat-item { display: flex; align-items: center; gap: 10px; }
+        .stat-item .val { font-size: 20px; font-weight: bold; font-family: var(--mono-font); }
+        .stat-item .label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; }
+
+        .daily-goal-box {
+            background: var(--bg-dark); padding: 10px 20px; border-radius: 8px;
+            text-align: center; border: 1px solid #334155;
+        }
+        .goal-time { font-size: 18px; font-weight: bold; color: var(--code-yellow); font-family: var(--mono-font); }
+
+        /* --- PLUS CONTENT CONTAINER --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .module-card {
+            background: var(--panel-dark);
+            border-radius: 12px;
+            border: 1px solid #334155;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+       
+
+        /* --- HERO SECTION --- */
+        .hero { display: flex; justify-content: space-between; align-items: center; gap: 50px; }
+        .hero-content { flex: 1; z-index: 2; }
+        .hero-content h1 { font-size: 42px; margin-bottom: 20px; line-height: 1.2; }
+        .hero-content p { color: var(--text-dim); font-size: 18px; margin-bottom: 30px; }
+
+        .btn-upgrade {
+            background: var(--code-yellow); color: #000;
+            padding: 15px 40px; font-size: 16px; font-weight: 800;
+            border: none; border-radius: 6px; cursor: pointer;
+            font-family: var(--mono-font); text-transform: uppercase;
+        }
+
+        .testimonial { flex: 0 0 300px; background: rgba(0,0,0,0.2); padding: 30px; border-radius: 12px; border: 1px dotted #334155; }
+        .avatar { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 15px; border: 2px solid var(--code-blue); }
+        .quote { font-size: 14px; font-style: italic; line-height: 1.6; color: var(--text-dim); }
+
+        /* --- FEATURES --- */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 30px; margin-top: 60px;
+        }
+        .feature-card {
+            background: var(--bg-dark); padding: 30px; border-radius: 8px;
+            border: 1px solid #334155; text-align: center;
+        }
+        .feature-icon { font-size: 40px; margin-bottom: 20px; display: block; }
+        .feature-card h3 { color: var(--code-blue); margin-bottom: 10px; font-size: 18px; }
+        .feature-card p { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">CODETYPO<span>.com</span></div>
+        <div class="nav-container">
+            <a href="main_home_page.html" class="nav-link">lessons.list()</a>
+            <a href="#" class="nav-link">run_tests()</a>
+            <a href="#" class="nav-link">play_games()</a>
+            <a href="#" class="nav-link">view_progress()</a>
+            <a href="#" class="nav-link">themes.cfg</a>
+            <a href="Premium_membership_01.html" class="nav-link btn-core">premium.paid</a>
+            <span class="nav-link active-link" style="border-left: 1px solid #334155;">aatish@root ▾</span>
+        </div>
+    </header>
+
+    <div class="stats-wrapper">
+        <div class="stats-bar">
+            <div class="profile-section">
+                <div class="profile-pic">
+                    <img src="https://via.placeholder.com/80/0f172a/94a3b8?text=ROOT" alt="Profile">
+                </div>
+                <div>
+                    <span class="rank-tag">level: seed_ling_1</span>
+                    <div style="color: var(--text-dim); font-size: 11px; margin-top: 5px; font-family: var(--mono-font);">exp_to_next: 5,180</div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <span style="font-size: 20px;">⚡</span>
+                <div>
+                    <div class="label">velocity</div>
+                    <div class="val">38 <small style="font-size: 10px; color: var(--text-dim);">wpm</small></div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <span style="font-size: 20px;">🎯</span>
+                <div>
+                    <div class="label">accuracy</div>
+                    <div class="val">94%</div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <span style="font-size: 20px;">🕒</span>
+                <div>
+                    <div class="label">uptime</div>
+                    <div class="val">10:01</div>
+                </div>
+            </div>
+
+            <div class="daily-goal-box">
+                <div class="label" style="margin-bottom: 5px;">Daily Target</div>
+                <div class="goal-time">00:00</div>
+                <div style="font-size: 9px; color: var(--text-dim); font-family: var(--mono-font);">/15:00</div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <div class="module-card">
+            
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Upgrade Your Coding Speed With PLUS</h1>
+                    <p>Unlock advanced language modules, real-time heatmap analytics, and a completely ad-free terminal environment.</p>
+                    <button class="btn-upgrade">Initialize Upgrade</button>
+                    <div style="margin-top: 20px; font-size: 11px; color: var(--text-dim);">
+                        * Cancel anytime. <a href="#" style="color: var(--code-blue);">View team/enterprise pricing</a>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <img src="https://i.pravatar.cc/100?u=dev2" alt="Dev" class="avatar">
+                    <div class="quote">
+                        "Practicing with the PLUS modules improved my bracket-typing speed by 40%. The ad-free IDE is a game changer for focus."
+                    </div>
+                    <div style="margin-top: 10px; font-weight: bold; font-size: 12px; color: var(--code-yellow);">— Alex, Fullstack Dev</div>
+                </div>
+            </section>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📂</span>
+                    <h3>Master All Languages</h3>
+                    <p>Practice Python, Rust, C++, and React-specific syntax modules.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Advanced Metrics</h3>
+                    <p>Get deep insights into which key combinations are slowing your compile time.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🚫</span>
+                    <h3>Zero Interruptions</h3>
+                    <p>Focus purely on the code with our high-performance, ad-free UI.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;           /* Deep background */
+            --sidebar-dark: #1e293b;      /* Slate sidebar */
+            --input-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --code-green: #10b981;
+            --code-blue: #38bdf8;
+            --btn-gold: #f3ce7a;
+            --btn-gold-shadow: #d4ae5a;
+            --mono-font: 'Fira Code', monospace;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+        }
+
+        .main-wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* --- SIDEBAR (Terminal Style) --- */
+        .sidebar {
+            width: 32%;
+            min-width: 380px;
+            background-color: var(--sidebar-dark);
+            color: white;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo span { font-weight: 300; font-size: 18px; color: var(--code-blue); font-family: var(--mono-font); }
+
+        .terminal-icon {
+            font-family: var(--mono-font);
+            color: var(--code-green);
+            font-size: 20px;
+        }
+
+        .sidebar-content {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .sidebar-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: var(--text-main);
+        }
+
+        .sidebar-content p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        .sidebar-footer {
+            font-family: var(--mono-font);
+            font-size: 12px;
+            color: #475569;
+            margin-top: auto;
+        }
+
+        /* --- LOGIN SECTION (IDE Workspace Style) --- */
+        .login-container {
+            flex-grow: 1;
+            padding: 40px 8%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background-color: var(--bg-dark);
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            font-family: var(--mono-font);
+            color: var(--text-dim);
+            margin-bottom: 50px;
+        }
+
+        .btn-instructor {
+            background-color: transparent;
+            border: 1px solid var(--btn-gold);
+            padding: 8px 18px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--btn-gold);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-instructor:hover {
+            background: rgba(243, 206, 122, 0.1);
+        }
+
+        .login-box {
+            max-width: 550px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .login-box h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .signup-link {
+            font-size: 15px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+
+        .signup-link a { color: var(--code-blue); font-weight: 600; text-decoration: none; }
+
+        /* Social Buttons */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            transition: border-color 0.2s;
+        }
+
+        .social-btn:hover { border-color: var(--code-blue); }
+
+        /* Separator // OR */
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 35px 0;
+            color: #475569;
+            font-family: var(--mono-font);
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .separator::before, .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .separator span { padding: 0 15px; }
+
+        /* Form Inputs */
+        .input-group {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-family: var(--mono-font);
+            color: var(--code-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            background: var(--input-bg);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            font-size: 16px;
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--code-blue);
+            background: #0f172a;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .forgot-link {
+            text-align: right;
+            display: block;
+            color: var(--text-dim);
+            font-size: 13px;
+            font-family: var(--mono-font);
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+        .forgot-link:hover { color: var(--code-blue); }
+
+        /* Footer Action */
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 2px; background: #334155; }
+        .dot.active { background: var(--code-blue); box-shadow: 0 0 8px var(--code-blue); }
+
+        .btn-next {
+            background-color: var(--btn-gold);
+            color: #453715;
+            padding: 16px 50px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 4px 0 var(--btn-gold-shadow);
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-next:active { transform: translateY(2px); box-shadow: none; }
+
+        /* FOOTER */
+        .footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 30px;
+            border-top: 1px solid #1e293b;
+            font-size: 12px;
+            font-family: var(--mono-font);
+            color: #475569;
+        }
+
+        .footer-right a { color: #475569; text-decoration: none; margin-left: 15px; }
+        .footer-right a:hover { color: var(--text-dim); }
+
+        @media (max-width: 900px) {
+            .main-wrapper { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; min-width: 0; padding: 30px; }
+            .login-container { padding: 40px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <!-- LEFT SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">
+                <div>CODETYPO<span>.com</span></div>
+                <div class="terminal-icon">&lt;/&gt;</div>
+            </div>
+
+            <div class="sidebar-content">
+                <h2>Master the Logic of Code.</h2>
+                <p>Access the world's most advanced platform for technical accuracy and typing velocity. Built by engineers, for future engineers.</p>
+            </div>
+        </div>
+
+        <!-- RIGHT LOGIN FORM -->
+        <div class="login-container">
+            <div class="top-nav">
+                <span>utf-8</span>
+                <div style="width: 1px; height: 12px; background: #334155;"></div>
+                <span>Not a student?</span>
+                <a href="#" class="btn-instructor">Instructor.exe</a>
+            </div>
+
+            <div class="login-box">
+                <h1>Student Login</h1>
+                <p class="signup-link">New user? <a href="#">Create free_account()</a></p>
+
+                <div class="social-grid">
+                    <a href="#" class="social-btn">Google</a>
+                    <a href="#" class="social-btn">Microsoft</a>
+                    <a href="#" class="social-btn">Clever</a>
+                    <a href="#" class="social-btn">ClassLink</a>
+                </div>
+
+                <div class="separator"><span>// OR USE CREDENTIALS</span></div>
+
+                <div class="input-group">
+                    <label>username_or_email</label>
+                    <input type="text" placeholder="user@codetypo.com">
+                </div>
+                <a href="#" class="forgot-link">forgot_password?</a>
+
+                <div class="form-footer">
+                    <div class="dots">
+                        <div class="dot active"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <a href="/HOME/index.html" class="btn-next">Continue »</a>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div>root@codetypo:~# _</div>
+                <div class="footer-right">
+                    <a href="#">privacy_policy</a>
+                    <a href="#">terms_of_service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
