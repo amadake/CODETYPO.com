@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C Curriculum | CODETYPO.com</title>
+    <title>Upload C Code | CODETYPO.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #0f172a;           /* Deep background */
-            --sidebar-dark: #1e293b;      /* Slate panels */
+            --bg-dark: #0f172a;           
+            --sidebar-dark: #1e293b;      
             --card-bg: #1e293b;
             --text-main: #f1f5f9;
             --text-dim: #94a3b8;
@@ -31,8 +32,8 @@
         
         body.scrolled { padding-top: 160px; }
 
-        /* --- DYNAMIC HEADER --- */
-        header {
+        /* --- HEADER (MATCHING IMAGE) --- */
+       header {
                 background-color: var(--sidebar-dark);
             padding: 40px 5% 70px 5%;
             color: white;
@@ -149,76 +150,66 @@
         .goal-sub { font-size: 9px; color: var(--text-dim); font-family: var(--mono-font); text-transform: uppercase; transition: 0.4s; }
         header.shrink + .stats-wrapper .goal-sub { display: none; }
 
-        /* --- SIDEBAR (FILE EXPLORER STYLE) --- */
+
+        /* --- CONTENT LAYOUT --- */
         .main-content { max-width: 1400px; margin: 40px auto; display: flex; padding: 0 20px; align-items: flex-start; gap: 30px; }
         
         .sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 160px; }
-        .sidebar-title { font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; margin: 0 0 15px 10px; font-family: var(--mono-font); }
-        .sidebar-card { background: var(--sidebar-dark); border-radius: 8px; overflow: hidden; border: 1px solid #334155; }
-
+        .sidebar-card { background: var(--sidebar-dark); border-radius: 8px; overflow: hidden; border: 1px solid #334155; margin-bottom: 20px; }
         .sidebar-item {
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #334155; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-dim);
+            border-bottom: 1px solid #334155; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-dim);
             text-decoration: none; transition: 0.2s; font-family: var(--mono-font);
         }
+        .sidebar-item.active { background-color: var(--bg-dark); color: var(--code-blue); border-left: 3px solid var(--code-blue); }
 
-        .sidebar-item:hover { background: #1e293b; color: white; }
-
-        .sidebar-item.active {
-            background-color: var(--bg-dark); color: var(--code-blue); border-left: 3px solid var(--code-blue);
-        }
-
-        /* --- LESSON BOX (IDE WORKSPACE STYLE) --- */
-        .lesson-container {
+        /* --- UPLOAD AREA --- */
+        .upload-container {
             flex-grow: 1; background-color: var(--sidebar-dark); border-radius: 12px;
-            padding: 40px; border: 1px solid #334155; position: relative;
+            padding: 60px 40px; border: 1px solid #334155; position: relative;
         }
 
-        .lesson-container::before {
-            content: "presented by CODETYPO.com";
+        .upload-container::before {
+            content: "codetypo // file_uploader.sys";
             position: absolute; top: 0; left: 40px;
             background: var(--bg-dark); padding: 5px 15px;
             font-family: var(--mono-font); font-size: 11px; color: var(--text-dim);
             border-radius: 0 0 4px 4px; border: 1px solid #334155; border-top: none;
         }
 
-        .lesson-card {
-            background: var(--bg-dark); border-radius: 8px; padding: 25px; margin-bottom: 15px;
-            display: flex; align-items: center; transition: 0.2s; border: 1px solid #334155;
+        .drop-zone {
+            background: var(--bg-dark);
+            border: 2px dashed #334155;
+            border-radius: 12px;
+            padding: 80px 20px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            margin-bottom: 25px;
         }
-        .lesson-card:hover { border-color: var(--code-blue); transform: translateX(5px); }
-        
-        .lvl-num { 
-            width: 45px; height: 45px; border: 1px solid #334155; border-radius: 6px; 
-            display: flex; align-items: center; justify-content: center; 
-            font-weight: 700; color: var(--text-dim); margin-right: 25px; 
-            font-family: var(--mono-font); font-size: 18px;
+
+        .drop-zone:hover { border-color: var(--code-blue); background: rgba(56, 189, 248, 0.02); }
+
+        .file-display {
+            background: var(--bg-dark); border: 1px solid var(--code-blue);
+            padding: 20px; border-radius: 8px; display: none;
+            align-items: center; justify-content: space-between; margin-bottom: 25px;
         }
-        
+
         .start-btn { 
             background-color: var(--btn-gold); color: #453715; 
-            padding: 12px 30px; border-radius: 6px; border: none; 
+            padding: 15px 35px; border-radius: 6px; border: none; 
             font-weight: 800; cursor: pointer; text-decoration: none; 
             font-size: 14px; text-transform: uppercase; 
             box-shadow: 0 4px 0 var(--btn-gold-shadow);
             font-family: var(--mono-font);
         }
-        .btn-locked { 
-            background: #334155; color: #475569; box-shadow: none; cursor: not-allowed;
-        }
-
-        .lesson-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
-        .lesson-desc { font-size: 13px; color: var(--text-dim); font-family: var(--mono-font); }
-
-        .user-wrapper { position: relative; }
-
-
-
+        .start-btn:disabled { background: #334155; box-shadow: none; color: #475569; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
-  <header id="mainHeader">
+<header id="mainHeader">
         <a href="/FRONTEND/HOME/home_page_all_lang.html" class="logo">CODETYPO<span>.com</span></a>
         <div class="nav-island">
             <a href="c_practice_home_Beginner.html" class="nav-link active-link">lessons.list()</a>
@@ -238,9 +229,9 @@
         <div class="stats-bar">
             <div style="display: flex; align-items: center;">
                 <div class="profile-pic">
-                    <img src="Screenshot_20260403_023124.jpg.jpeg" alt="User">
+                    <img src="/FRONTEND/IMAGES/my_photo_behind.png" alt="User Profile">
                 </div>
-                <div style="margin-left: 20px;">
+               <div style="margin-left: 20px;">
                     <span class="rank-tag">level: seed_ling_1</span>
                     <div style="font-family: var(--mono-font); font-size: 11px; color: var(--text-dim); margin-top: 5px;">
                         exp_to_next: 5,180
@@ -269,144 +260,120 @@
                 <div class="goal-sub">/15:00</div>
             </div>
         </div>
+        </div>
     </div>
 
     <div class="main-content">
         <aside class="sidebar">
-    <!-- First Block -->
-    <div class="sidebar-title"></div>
-    <div class="sidebar-card">
-        <div class="sidebar-item active">Beginner.cpp <span>▶</span></div>
-         <a href="c_practice_home_Intermidate.html" class="sidebar-item">Intermediate.cpp <span>▶</span></a>
-        <a href="c_practice_home_Advanced.html" class="sidebar-item">Advanced.cpp <span>▶</span></a>
-    </div>
+            <div class="sidebar-card">
+                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Beginner.html" class="sidebar-item">Beginner.cpp <span>▶</span></a>
+                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Intermediate.html" class="sidebar-item">Intermediate.cpp <span>▶</span></a>
+                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Advanced.html" class="sidebar-item">Advanced.cpp <span>▶</span></a>
+            </div>
+            <div class="sidebar-card">
+                <a href="c_home_page.html" class="sidebar-item active">Custom Code <span>▶</span></a>
+            </div>
+        </aside>
 
-    <!-- New Custom Block -->
-    <div class="sidebar-title"></div>
-    <div class="sidebar-card">
-        <a href="/FRONTEND/CUSTOM CODE/c_home_page.html" class="sidebar-item">Custom Code <span>▶</span></a>
-    </div>
-</aside>
-
-       <main class="lesson-container">
-            <h2 style="color: white; font-size: 24px; margin-bottom: 30px; font-family: var(--mono-font);">
-                <span style="color: var(--code-blue);">fetch</span> Beginner_C_Lessons
+        <main class="upload-container">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 10px; font-family: var(--mono-font);">
+                <span style="color: var(--code-blue);">upload</span> /practice/custom_file.c
             </h2>
+            <p style="color: var(--text-dim); font-family: var(--mono-font); font-size: 13px; margin-bottom: 40px;">
+                // Upload your C code to start a customized typing practice session.
+            </p>
 
-            <!-- Level 01 -->
-            <div class="lesson-card">
-                <div class="lvl-num">01</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">C Programming Basics – Hello World</div>
-                    <div class="lesson-desc">#include, main(), printf</div>
-                </div>
-                <a href="level_1_c.html" class="start-btn">Execute »</a>
+            <div class="drop-zone" id="dropZone">
+                <i class="fas fa-file-arrow-up" style="font-size: 40px; color: var(--text-dim); margin-bottom: 15px;"></i>
+                <div style="font-family: var(--mono-font); font-size: 16px;">Drop .c file here</div>
+                <div style="color: var(--text-dim); font-size: 12px; margin-top: 10px;">or click to browse files</div>
+                <input type="file" id="fileInput" accept=".c" style="display: none;">
             </div>
 
-            <!-- Level 02 -->
-            <div class="lesson-card">
-                <div class="lvl-num">02</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Formatted Output</div>
-                    <div class="lesson-desc">printf, \n, text formatting</div>
+            <div class="file-display" id="fileDisplay">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-code" style="color: var(--code-green); font-size: 20px;"></i>
+                    <div>
+                        <div id="fileName" style="font-family: var(--mono-font); font-weight: 700;">main.c</div>
+                        <div id="fileSize" style="font-size: 11px; color: var(--text-dim);">0.00 KB</div>
+                    </div>
                 </div>
-                <a href="level_2_c.html" class="start-btn">Execute »</a>
+                <i class="fas fa-times" id="removeBtn" style="cursor: pointer; color: var(--text-dim);"></i>
             </div>
 
-            <!-- Level 03 -->
-            <div class="lesson-card">
-                <div class="lvl-num">03</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Variables & Math</div>
-                    <div class="lesson-desc">int, variables, arithmetic</div>
-                </div>
-                <a href="level_3_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 04 -->
-            <div class="lesson-card">
-                <div class="lvl-num">04</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">User Input</div>
-                    <div class="lesson-desc">scanf, user input</div>
-                </div>
-                <a href="level_4_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 05 -->
-            <div class="lesson-card">
-                <div class="lvl-num">05</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">If Else</div>
-                    <div class="lesson-desc">conditions, even/odd.</div>
-                </div>
-                <a href="level_5_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 06 -->
-            <div class="lesson-card">
-                <div class="lvl-num">06</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">For Loop</div>
-                    <div class="lesson-desc">loops, multiplication table</div>
-                </div>
-                <a href="level_6_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 07 -->
-            <div class="lesson-card">
-                <div class="lvl-num">07</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">While Loop</div>
-                    <div class="lesson-desc">loop, factorial</div>
-                </div>
-                <a href="level_7_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 08 -->
-            <div class="lesson-card">
-                <div class="lvl-num">08</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Arrays</div>
-                    <div class="lesson-desc">arrays, sum, average</div>
-                </div>
-                <a href="level_8_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 09 -->
-            <div class="lesson-card">
-                <div class="lvl-num">09</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Functions</div>
-                    <div class="lesson-desc">functions, return values.</div>
-                </div>
-                <a href="level_9_c.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 10 -->
-            <div class="lesson-card">
-                <div class="lvl-num">10</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Switch Case</div>
-                    <div class="lesson-desc">menu driven program</div>
-                </div>
-                <a href="level_10_c.html" class="start-btn">Execute »</a>
+            <div style="text-align: right;">
+                <button class="start-btn" id="startBtn" disabled>Initialize Session »</button>
             </div>
         </main>
+    </div>
 
     <script>
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shrink');
-                document.body.classList.add('scrolled');
-            } else {
-                header.classList.remove('shrink');
-                document.body.classList.remove('scrolled');
-            }
-        });
-                
+       // Grab the elements
+const header = document.getElementById('mainHeader');
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileDisplay = document.getElementById('fileDisplay');
+const fileNameDisplay = document.getElementById('fileName');
+const fileSizeDisplay = document.getElementById('fileSize');
+const removeBtn = document.getElementById('removeBtn');
+const startBtn = document.getElementById('startBtn');
 
+// 1. File Selection Logic
+dropZone.onclick = () => fileInput.click();
+
+fileInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.name.endsWith('.c')) {
+        const reader = new FileReader();
+        
+        reader.onload = (event) => {
+            // SAVE THE CODE TO LOCAL STORAGE so the next page can read it
+            const codeContent = event.target.result;
+            localStorage.setItem('customPracticeCode', codeContent);
+            localStorage.setItem('customFileName', file.name);
+
+            // Update UI
+            fileNameDisplay.innerText = file.name;
+            fileSizeDisplay.innerText = (file.size / 1024).toFixed(2) + " KB";
+            dropZone.style.display = 'none';
+            fileDisplay.style.display = 'flex';
+            
+            // ENABLE THE BUTTON
+            startBtn.disabled = false;
+        };
+        
+        reader.readAsText(file);
+    } else {
+        alert("Only .c files are accepted.");
+    }
+};
+
+// 2. REDIRECT LOGIC
+startBtn.addEventListener('click', () => {
+    // Redirect to the typing practice page
+    window.location.href = 'c_code_user.html';
+});
+
+// 3. Remove File Logic
+removeBtn.onclick = () => {
+    fileInput.value = "";
+    localStorage.removeItem('customPracticeCode');
+    localStorage.removeItem('customFileName');
+    dropZone.style.display = 'block';
+    fileDisplay.style.display = 'none';
+    startBtn.disabled = true;
+};
+
+// 4. Header Scroll Logic
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.classList.add('shrink');
+        document.body.classList.add('scrolled');
+    } else {
+        header.classList.remove('shrink');
+        document.body.classList.remove('scrolled');
+    }
+});
     </script>
 </body>
 </html>

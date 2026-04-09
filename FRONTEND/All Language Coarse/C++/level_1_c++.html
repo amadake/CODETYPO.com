@@ -4,56 +4,14 @@
     <meta charset="UTF-8">
     <title>Level 1: C++ Syntax | CODETYPO.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- Main external CSS -->
     <link rel="stylesheet" href="all_level.css">
-    <style>
-        /* Essential UI layout fixes for dots and header buttons */
-        .header-right {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .editor-tab {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            background: var(--sidebar-dark);
-            border-bottom: 1px solid #334155;
-            gap: 12px;
-        }
-
-        .tab-dots {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .tab-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .tab-title {
-            font-family: var(--mono-font);
-            font-size: 13px;
-            color: #94a3b8;
-            margin-left: 5px;
-        }
-    </style>
 </head>
 <body>
-
-<!-- START OVERLAY -->
 <div id="start-overlay">
     <div style="font-family: var(--mono-font); color: var(--text-correct); margin-bottom: 10px;">> initializing_level_1.cpp</div>
     <h1>Language: C++ (Level 1)</h1>
     <button class="start-btn" onclick="startGame()">Execute Lesson</button>
 </div>
-
 <header>
     <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
         <a href="c++_practice_home_Beginner.html" class="nav-btn" style="text-decoration: none;">&lt; exit</a>
@@ -67,10 +25,8 @@
         <div class="nav-btn" onclick="toggleModal('sound-modal', true)">audio_cfg</div>
     </div>
 </header>
-
 <main class="main-content">
     <div class="editor-container">
-        <!-- Editor Tab with Mac-style 3 dots -->
         <div class="editor-tab">
             <div class="tab-dots">
                 <div class="tab-dot" style="background: #f43f5e;"></div> <!-- Red -->
@@ -85,8 +41,6 @@
     </div>
     <div class="kb-container" id="visual-keyboard"></div>
 </main>
-
-<!-- PAUSE NOTIFICATION -->
 <div id="pause-indicator">
     <div style="width:12px; height:12px; background:var(--code-yellow); border-radius:50%;"></div>
     <div style="font-family: var(--mono-font); font-size: 13px;">STATUS: PAUSED <br><span style="color: #64748b; font-size: 11px;">Keep typing to resume</span></div>
@@ -101,18 +55,15 @@
         <button class="nav-btn" style="width: 100%;" onclick="toggleModal('sound-modal', false)">Save & Close</button>
     </div>
 </div>
-
 <!-- EXTERNAL MODULES -->
 <script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
 <script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
 <script src="all_level.js"></script>
-
 <script>
     GameEngine.init({
         code: `#include <iostream>\nusing namespace std;\n\nint main() {\ncout << "Welcome to C++ Programming" << endl;\ncout << "This is Beginner Level 1" << endl;\ncout << "Practice Typing Code" << endl;\nreturn 0;\n}`,
         resultPage: "level_1_result.html"
     });
 </script>
-
 </body>
 </html>

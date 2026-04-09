@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Syntax Sprint</title>
+    <style>
+        body { background: #1e1e1e; color: #d4d4d4; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        #game-container { width: 80%; max-width: 800px; text-align: left; background: #252526; padding: 30px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .code-display { font-size: 1.5rem; margin-bottom: 20px; white-space: pre; position: relative; letter-spacing: 1px; }
+        .cursor { border-left: 2px solid #007acc; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        #input-field { opacity: 0; position: absolute; z-index: -1; }
+        .correct { color: #b5cea8; }
+        .incorrect { background: #f44747; color: white; }
+        .stats { margin-top: 20px; color: #808080; display: flex; gap: 20px; }
+        .highlight { color: #569cd6; } /* C keyword color */
+    </style>
+</head>
+<body>
+
+    <h1 style="color: #ce9178;">#include &lt;speed.h&gt;</h1>
+
+    <div id="game-container">
+        <div id="code-area" class="code-display"></div>
+        <input type="text" id="input-field" autofocus>
+        
+        <div class="stats">
+            <div>WPM: <span id="wpm">0</span></div>
+            <div>Accuracy: <span id="accuracy">100</span>%</div>
+            <div>Progress: <span id="progress">0</span>/3</div>
+        </div>
+    </div>
+
+    <script>
+        const codeSnippets = [
+            'int *ptr = &val;',
+            'printf("Value: %d\\n", *ptr);',
+            'for(int i = 0; i < 10; i++) {',
+            'struct User { int id; char name[20]; };',
+            'while(!feof(fileptr)) {'
+        ];
+
+        let currentSnippetIndex = 0;
+        let charIndex = 0;
+        let mistakes = 0;
+        let startTime = null;
+
+        const codeArea = document.getElementById('code-area');
+        const inputField = document.getElementById('input-field');
+        const wpmDisplay = document.getElementById('wpm');
+        const accDisplay = document.getElementById('accuracy');
+        const progDisplay = document.getElementById('progress');
+
+        function loadSnippet() {
+            codeArea.innerHTML = '';
+            const snippet = codeSnippets[currentSnippetIndex];
+            snippet.split('').forEach(char => {
+                const span = document.createElement('span');
+                span.innerText = char;
+                codeArea.appendChild(span);
+            });
+            charIndex = 0;
+            updateCursor();
+        }
+
+        function updateCursor() {
+            const spans = codeArea.querySelectorAll('span');
+            spans.forEach(s => s.classList.remove('cursor'));
+            if(spans[charIndex]) spans[charIndex].classList.add('cursor');
+        }
+
+        window.addEventListener('click', () => inputField.focus());
+
+        inputField.addEventListener('input', (e) => {
+            if (!startTime) startTime = new Date();
+            
+            const characters = codeArea.querySelectorAll('span');
+            const typedChar = e.target.value.split('')[charIndex];
+            const targetChar = characters[charIndex].innerText;
+
+            if (typedChar == null) return; // Handle backspace if needed
+
+            if (typedChar === targetChar) {
+                characters[charIndex].classList.add('correct');
+            } else {
+                characters[charIndex].classList.add('incorrect');
+                mistakes++;
+            }
+
+            charIndex++;
+            e.target.value = ''; // Clear input for next char
+
+            if (charIndex === characters.length) {
+                nextSnippet();
+            } else {
+                updateCursor();
+            }
+
+            calculateStats();
+        });
+
+        function calculateStats() {
+            const timeElapsed = (new Date() - startTime) / 60000; // in minutes
+            const wpm = Math.round((charIndex / 5) / timeElapsed) || 0;
+            const accuracy = Math.round(((charIndex - mistakes) / charIndex) * 100) || 100;
+            
+            wpmDisplay.innerText = wpm;
+            accDisplay.innerText = accuracy;
+        }
+
+        function nextSnippet() {
+            currentSnippetIndex++;
+            if (currentSnippetIndex < codeSnippets.length) {
+                progDisplay.innerText = currentSnippetIndex;
+                loadSnippet();
+            } else {
+                codeArea.innerHTML = "<span class='highlight'>Process finished with exit code 0.</span>";
+                inputField.disabled = true;
+            }
+        }
+
+        loadSnippet();
+    </script>
+</body>
+</html>
