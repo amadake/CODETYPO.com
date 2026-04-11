@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 1: HTML Structure | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="all_level.css">
+</head>
+<body>
+
+<!-- START OVERLAY -->
+<div id="start-overlay">
+    <div style="font-family: var(--mono-font); color: var(--code-blue); margin-bottom: 10px;">> initializing_html_lesson.sh</div>
+    <h1>Language: HTML (Level 1)</h1>
+    <button class="start-btn" onclick="startGame()">Render Lesson</button>
+</div>
+
+<header>
+    <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
+        <!-- Changed link to the HTML beginner home page -->
+        <a href="html_practice_home_Beginner.html" class="nav-btn" style="text-decoration: none;">&lt; exit</a>
+        <div class="logo">CODETYPO<span>.com</span></div>
+    </div>
+    
+    <div class="timer-box" id="timer">03:00</div>
+    
+    <div class="header-right">
+        <div class="nav-btn" onclick="location.reload()">~/reset</div>
+        <div class="nav-btn" onclick="toggleModal('sound-modal', true)">audio_cfg</div>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="editor-container">
+        <div class="editor-tab">
+            <div class="tab-dots">
+                <div class="tab-dot" style="background: #f43f5e;"></div>
+                <div class="tab-dot" style="background: #fbbf24;"></div>
+                <div class="tab-dot" style="background: #10b981;"></div>
+            </div>
+            <!-- Tab shows the file being worked on -->
+            <div class="tab-title">index.html</div>
+        </div>
+        
+        <div id="code-display" class="code-area"></div>
+        <input type="text" id="hidden-input" autofocus autocomplete="off">
+    </div>
+    
+    <!-- Visual Keyboard Area -->
+    <div class="kb-container" id="visual-keyboard"></div>
+</main>
+
+<!-- PAUSE UI -->
+<div id="pause-indicator">
+    <div style="width:12px; height:12px; background:var(--code-yellow); border-radius:50%;"></div>
+    <div style="font-family: var(--mono-font); font-size: 13px;">STATUS: PAUSED <br><span style="color: #64748b; font-size: 11px;">Keep typing to resume</span></div>
+</div>
+
+<!-- AUDIO MODAL -->
+<div class="modal-overlay" id="sound-modal">
+    <div class="modal">
+        <h2>Audio Configuration</h2>
+        <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 20px;">Customize your typing experience</p>
+        <label style="cursor:pointer;"><input type="checkbox" checked id="s-typing"> Mechanical Clicks</label><br><br>
+        <label style="cursor:pointer;"><input type="checkbox" checked id="s-error"> Compiler Error Beep</label><br><br>
+        <button class="nav-btn" style="width: 100%;" onclick="toggleModal('sound-modal', false)">Save & Close</button>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="all_level.js"></script>
+
+<script>
+    // Initializing the engine with HTML code instead of C
+    GameEngine.init({
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+</head>
+<body>
+    <h1>John Doe</h1>
+    <p>Frontend Developer</p>
+    <p>I build modern and responsive websites.</p>
+    <button>Contact Me</button>
+</body>
+</html>`,
+        resultPage: "level_1_html_result.html"
+    });
+</script>
+
+</body>
+</html>
