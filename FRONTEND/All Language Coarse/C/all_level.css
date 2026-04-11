@@ -191,3 +191,18 @@ header {
             gap: 15px;
             align-items: center;
         }
+
+        .main-content {
+    /* ... keep your existing flex and padding styles ... */
+    
+    /* ADD THESE LINES: */
+    transform: scale(0.85);      /* 0.85 means 85% size. Change to 0.8 for smaller. */
+    transform-origin: top center; /* Ensures it stays centered at the top */
+    margin-top: -20px;           /* Reduces the gap created by scaling */
+    width: 100%;                 /* Ensures it stays responsive */
+}
+
+/* Optional: If the scaling creates too much empty space on the sides */
+body {
+    overflow-x: hidden; /* Prevents horizontal scrollbars */
+}

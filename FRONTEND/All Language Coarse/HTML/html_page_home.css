@@ -1,0 +1,173 @@
+:root {
+    --bg-dark: #0f172a;
+    --sidebar-dark: #1e293b;
+    --card-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --text-dim: #94a3b8;
+    --code-blue: #38bdf8;
+    --code-green: #10b981;
+    --code-yellow: #facc15;
+    --btn-gold: #f3ce7a;
+    --btn-gold-shadow: #d4ae5a;
+    --mono-font: 'Fira Code', monospace;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding-top: 280px;
+    transition: padding-top 0.4s ease;
+}
+
+body.scrolled { padding-top: 160px; }
+
+/* Header */
+header {
+    background-color: var(--sidebar-dark);
+    padding: 40px 5% 70px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+header.shrink {
+    padding: 12px 5%;
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo { font-size: 32px; font-weight: 800; font-family: var(--mono-font); text-decoration: none; color: white; transition: 0.4s; }
+header.shrink .logo { font-size: 22px; }
+.logo span { color: var(--code-blue); }
+
+.nav-island {
+    background-color: var(--bg-dark);
+    border-radius: 8px; display: flex; align-items: center;
+    padding: 5px 15px; border: 1px solid #334155;
+}
+
+.nav-link {
+    color: var(--text-dim); text-decoration: none; padding: 10px 15px;
+    font-weight: 600; font-size: 14px; font-family: var(--mono-font); transition: 0.2s;
+}
+
+.nav-link:hover { color: var(--code-blue); }
+.active-link { color: var(--code-yellow); }
+.btn-premium { border: 1px solid var(--code-blue); color: var(--code-blue) !important; border-radius: 4px; margin: 0 10px; }
+.divider { width: 1px; height: 20px; background: #334155; margin: 0 10px; }
+
+/* Stats Bar */
+.stats-wrapper {
+    position: fixed;
+    top: 160px; left: 0; right: 0;
+    z-index: 1100;
+    transition: all 0.4s ease;
+}
+
+header.shrink + .stats-wrapper { top: 60px; }
+
+.stats-bar {
+    background: var(--sidebar-dark);
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 40px; display: flex;
+    align-items: center; justify-content: space-between;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-radius: 12px; height: 85px; border: 1px solid #334155;
+}
+
+.profile-section { display: flex; align-items: center; }
+.profile-pic {
+    width: 130px; height: 130px; background: var(--bg-dark);
+    border-radius: 12px; border: 4px solid var(--sidebar-dark);
+    overflow: hidden; margin-top: -65px; transition: 0.4s;
+}
+
+header.shrink + .stats-wrapper .profile-pic { width: 60px; height: 60px; margin-top: 0; }
+.profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+
+.rank-info { margin-left: 20px; }
+.rank-tag {
+    background: rgba(56, 189, 248, 0.1); color: var(--code-blue);
+    padding: 4px 12px; border-radius: 4px; font-weight: bold;
+    font-family: var(--mono-font); font-size: 13px; border: 1px solid var(--code-blue);
+}
+.exp-text { font-family: var(--mono-font); font-size: 11px; color: var(--text-dim); margin-top: 5px; }
+
+.stat-item { display: flex; align-items: center; gap: 10px; }
+.stat-item .val { font-size: 22px; font-weight: bold; font-family: var(--mono-font); color: white; }
+.stat-item .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-family: var(--mono-font); }
+
+.daily-goal-box {
+    background: var(--bg-dark); width: 130px; height: 130px;
+    border-radius: 12px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 1px solid #334155; margin-top: -65px; transition: 0.4s;
+}
+
+header.shrink + .stats-wrapper .daily-goal-box { width: 60px; height: 60px; margin-top: 0; }
+.goal-time { font-size: 24px; font-weight: bold; color: var(--code-yellow); font-family: var(--mono-font); }
+header.shrink + .stats-wrapper .goal-time { font-size: 12px; }
+header.shrink + .stats-wrapper .goal-sub { display: none; }
+.goal-sub { font-size: 9px; color: var(--text-dim); font-family: var(--mono-font); text-transform: uppercase; }
+
+/* Main Content */
+.main-content { max-width: 1400px; margin: 40px auto; display: flex; padding: 0 20px; gap: 30px; }
+
+.sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 160px; }
+.sidebar-title { font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; margin: 20px 0 10px 10px; font-family: var(--mono-font); }
+.sidebar-card { background: var(--sidebar-dark); border-radius: 8px; overflow: hidden; border: 1px solid #334155; }
+.sidebar-item {
+    padding: 15px 20px; display: flex; justify-content: space-between;
+    border-bottom: 1px solid #334155; cursor: pointer; font-size: 14px;
+    color: var(--text-dim); text-decoration: none; font-family: var(--mono-font);
+}
+.sidebar-item:hover, .sidebar-item.active { background: #1e293b; color: var(--code-blue); }
+
+.lesson-container {
+    flex-grow: 1; background-color: var(--sidebar-dark); border-radius: 12px;
+    padding: 40px; border: 1px solid #334155; position: relative;
+}
+
+.lesson-container::before {
+    content: "CODETYPO // HTML_ACADEMY";
+    position: absolute; top: 0; left: 40px;
+    background: var(--bg-dark); padding: 5px 15px;
+    font-family: var(--mono-font); font-size: 11px; color: var(--text-dim);
+    border-radius: 0 0 4px 4px; border: 1px solid #334155; border-top: none;
+}
+
+.main-heading { color: white; font-size: 24px; margin-bottom: 30px; font-family: var(--mono-font); }
+
+.lesson-card {
+    background: var(--bg-dark); border-radius: 8px; padding: 25px;
+    margin-bottom: 15px; display: flex; align-items: center;
+    border: 1px solid #334155; transition: 0.2s;
+}
+.lesson-card:hover { border-color: var(--code-blue); transform: translateX(5px); }
+
+.lvl-num {
+    width: 45px; height: 45px; border: 1px solid #334155; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--text-dim); margin-right: 25px;
+    font-family: var(--mono-font); font-size: 18px;
+}
+
+.lesson-info { flex-grow: 1; }
+.lesson-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
+.lesson-desc { font-size: 13px; color: var(--text-dim); font-family: var(--mono-font); }
+
+.start-btn {
+    background-color: var(--btn-gold); color: #453715;
+    padding: 12px 30px; border-radius: 6px; border: none;
+    font-weight: 800; cursor: pointer; text-decoration: none;
+    font-size: 14px; text-transform: uppercase;
+    box-shadow: 0 4px 0 var(--btn-gold-shadow);
+    font-family: var(--mono-font);
+}
