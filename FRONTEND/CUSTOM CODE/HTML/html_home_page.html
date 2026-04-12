@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload C Code | CODETYPO.com</title>
+    <title>Upload HTML Code | CODETYPO.com</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- External CSS -->
-    <link rel="stylesheet" href="c_home_page.css">
+    <link rel="stylesheet" href="html_home_page.css">
+    <style>
+        /* Optional: Change the accent color to HTML Orange */
+        :root {
+            --accent-color: #e34c26; /* Standard HTML5 Orange */
+        }
+        .start-btn {
+            background: var(--accent-color);
+        }
+        .logo span {
+            color: var(--accent-color);
+        }
+    </style>
 </head>
 <body>
 
     <header id="mainHeader">
         <a href="/FRONTEND/HOME/home_page_all_lang.html" class="logo">CODETYPO<span>.com</span></a>
         <nav class="nav-island">
-            <a href="c_practice_home_Beginner.html" class="nav-link active-link">lessons.list()</a>
+            <a href="html_practice_home_Beginner.html" class="nav-link active-link">lessons.list()</a>
             <a href="/MAIN/run_tests.html" class="nav-link">run_tests()</a>
             <a href="/MAIN/GAMES/" class="nav-link">play_games()</a>
             <a href="/MAIN/view_progress.html" class="nav-link">view_progress() ▾</a>
             <div class="divider"></div>
-            <a href="/FRONTEND/Premium_Membership/Premium_membership_01_c.html" class="nav-link btn-premium">premium.paid</a>
+            <a href="/FRONTEND/Premium_Membership/Premium_membership_01_html.html" class="nav-link btn-premium">premium.paid</a>
             <div class="divider"></div>
             <div class="user-wrapper" id="userMenu">
                 <div class="nav-link user-label">aatish@root ▾</div>
@@ -67,36 +78,36 @@
         <aside class="sidebar">
             <div class="sidebar-title">Modules</div>
             <div class="sidebar-card">
-                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Beginner.html" class="sidebar-item">Beginner.cpp <span>▶</span></a>
-                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Intermediate.html" class="sidebar-item">Intermediate.cpp <span>▶</span></a>
-                <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Advanced.html" class="sidebar-item">Advanced.cpp <span>▶</span></a>
+                <a href="/FRONTEND/All Language Coarse/HTML/html_practice_home_Beginner.html" class="sidebar-item">Beginner.html <span>▶</span></a>
+                <a href="/FRONTEND/All Language Coarse/HTML/html_practice_home_Intermediate.html" class="sidebar-item">Intermediate.html <span>▶</span></a>
+                <a href="/FRONTEND/All Language Coarse/HTML/html_practice_home_Advanced.html" class="sidebar-item">Advanced.html <span>▶</span></a>
             </div>
             <div class="sidebar-title">Workspace</div>
             <div class="sidebar-card">
-                <a href="c_home_page.html" class="sidebar-item active">Custom Code <span>▶</span></a>
+                <a href="html_home_page.html" class="sidebar-item active">Custom Code <span>▶</span></a>
             </div>
         </aside>
 
         <main class="upload-container">
             <h2 class="container-title">
-                <span class="code-keyword">upload</span> /practice/custom_file.c
+                <span class="code-keyword">upload</span> /practice/index.html
             </h2>
             <p class="upload-subtitle">
-                // Upload your C code to start a customized typing practice session.
+                // Upload your HTML code to start a customized typing practice session.
             </p>
 
             <div class="drop-zone" id="dropZone">
-                <i class="fas fa-file-arrow-up drop-icon"></i>
-                <div class="drop-text">Drop .c file here</div>
+                <i class="fab fa-html5 drop-icon"></i> <!-- Changed to HTML5 icon -->
+                <div class="drop-text">Drop .html file here</div>
                 <div class="drop-subtext">or click to browse files</div>
-                <input type="file" id="fileInput" accept=".c" style="display: none;">
+                <input type="file" id="fileInput" accept=".html" style="display: none;">
             </div>
 
             <div class="file-display" id="fileDisplay">
                 <div class="file-info-group">
-                    <i class="fas fa-code file-icon"></i>
+                    <i class="fab fa-html5 file-icon"></i>
                     <div>
-                        <div id="fileName" class="file-name-text">main.c</div>
+                        <div id="fileName" class="file-name-text">index.html</div>
                         <div id="fileSize" class="file-size-text">0.00 KB</div>
                     </div>
                 </div>
@@ -110,6 +121,6 @@
     </div>
 
     <!-- External JS -->
-    <script src="c_home_page.js"></script>
+    <script src="html_home_page.js"></script>
 </body>
 </html>
