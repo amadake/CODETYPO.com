@@ -5,17 +5,51 @@
     <title>HTML Workspace | CODETYPO.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="html_styles.css">
+     <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/logo final .png">
 </head>
 <body>
 
-    <header>
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <a href="/FRONTEND/CODE RUNNER/HOME/home_page_all_lang.html" style="color:var(--accent-blue); text-decoration:none; border:1px solid #334155; padding:5px 12px; border-radius:4px; font-family: 'Fira Code';">&lt; exit</a>
-            <div style="font-size:22px; font-weight:800; font-family:'Fira Code'; color: aliceblue;">CODETYPO<span style="color:var(--accent-blue);">.html</span></div>
+   <header>
+    <div class="header-left">
+        <a href="/FRONTEND/CODE RUNNER/HOME/home_page_all_lang.html" class="exit-btn">&lt; exit</a>
+        <div class="logo-text">CODETYPO<span>.html</span></div>
+    </div>
+
+    <div class="header-actions">
+        <button onclick="HTMLEditor.run()" class="btn-update">▶ UPDATE PREVIEW</button>
+        <button onclick="HTMLEditor.startPractice()" class="btn-practice">⚡ PRACTICE</button>
+        <button onclick="HTMLEditor.printPDF()" class="btn-print">⎙ PRINT PDF</button>>
+    </div>
+
+    <div class="header-status">STATUS: ACTIVE</div>
+</header>
+
+<!-- UPDATED MODAL WITH FILE UPLOAD -->
+<div id="filename-modal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <h3>Create New File</h3>
+        
+        <div class="modal-section">
+            <p>Enter a name for your new HTML page:</p>
+            <input type="text" id="new-filename-input" placeholder="e.g., index.html" spellcheck="false">
+            <button class="btn-create" onclick="HTMLEditor.confirmAddTab()">Create Empty File</button>
         </div>
-        <button onclick="HTMLEditor.run()" style="background:var(--accent-green); border:none; padding:10px 25px; border-radius:6px; font-weight:800; cursor:pointer;">▶ UPDATE PREVIEW</button>
-        <div style="color:var(--accent-green); font-family:'Fira Code'; font-size:12px;">STATUS: ACTIVE</div>
-    </header>
+
+        <div class="modal-divider"><span>OR</span></div>
+
+        <div class="modal-section">
+            <p>Upload a file from your system:</p>
+            <label for="system-file-upload" class="custom-file-upload">
+                📁 Choose HTML File
+            </label>
+            <input type="file" id="system-file-upload" accept=".html,.txt,.css" onchange="HTMLEditor.handleFileUpload(event)">
+        </div>
+
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="HTMLEditor.closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
 
     <main class="main-content">
         <!-- LEFT: EDITOR -->
@@ -26,7 +60,7 @@
                     <div style="width:12px; height:12px; border-radius:50%; background:#fbbf24;"></div>
                     <div style="width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
                 </div>
-                <span style="font-size:12px; color:#94a3b8; font-family:'Fira Code';">SOURCE_CODE</span>
+                <span style="font-size:12px; color:#F97316; font-family:'Fira Code';">SOURCE_CODE</span>
             </div>
             
             <div class="tabs-bar">
@@ -40,7 +74,7 @@
         <!-- RIGHT: PREVIEW -->
         <div class="panel panel-preview" id="preview-panel">
             <div class="panel-header">
-                <span style="font-size:12px; font-family:'Fira Code';color: aliceblue;">LIVE_RENDER</span>
+                <span style="font-size:12px; font-family:'Fira Code';color: #F97316">LIVE_RENDER</span>
                 <button class="icon-btn" onclick="HTMLEditor.toggleFS()" id="fs-icon-container">
                     <!-- Maximize Icon Initial -->
                     <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>

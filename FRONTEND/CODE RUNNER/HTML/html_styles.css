@@ -18,17 +18,108 @@ body {
     overflow: hidden;
 }
 
-/* --- HEADER (Matched to Levels) --- */
+/* --- HEADER LAYOUT --- */
 header {
-    background-color: var(--sidebar-dark);
-    padding: 15px 40px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(235, 220, 220, 0.05);
-    z-index: 1000;
+    justify-content: space-between;
+    padding: 10px 25px;
+    background: #1e293b; /* Panel Dark */
+    border-bottom: 1px solid #334155;
+    height: 65px;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- LOGO & EXIT --- */
+.exit-btn {
+    color: var(--accent-blue, #38bdf8);
+    text-decoration: none;
+    border: 1px solid #334155;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.exit-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: var(--accent-blue, #38bdf8);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Fira Code', monospace;
+    color: #f1f5f9;
+}
+
+.logo-text span {
+    color:#F97316;
+}
+
+/* --- BUTTON GROUP --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Gap between Update and Practice */
+}
+
+/* General button styling */
+.header-actions button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+/* Update Preview Button (Green) */
+.btn-update {
+    background: #10b981; 
+    color: #064e3b;
+}
+
+.btn-update:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+/* Practice Mode Button (Indigo) */
+.btn-practice {
+    background: #6366f1;
+    color: white;
+    box-shadow: 0 3px 0 #4338ca; /* Indigo shadow */
+}
+
+.btn-practice:hover {
+    background: #818cf8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 #4338ca;
+}
+
+.btn-practice:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+/* --- STATUS INDICATOR --- */
+.header-status {
+    color: #10b981;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
 /* --- WORKSPACE --- */
 .main-content {
     flex: 1;
@@ -216,4 +307,76 @@ header {
 
 .btn-create:hover {
     filter: brightness(1.1);
+}
+
+/* --- PRINT BUTTON (Header) --- */
+.btn-print {
+    background: #facc15 !important; /* Gold */
+    color: #422006 !important;
+    box-shadow: 0 3px 0 #a16207;
+}
+.btn-print:hover {
+    background: #fde047 !important;
+    transform: translateY(-1px);
+}
+
+/* --- MODAL UPDATES --- */
+.custom-modal {
+    max-width: 450px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.modal-section { margin-bottom: 20px; }
+
+.modal-divider {
+    margin: 25px 0;
+    position: relative;
+    border-top: 1px solid #334155;
+}
+.modal-divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e293b;
+    padding: 0 15px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* File Upload Button Styling */
+#system-file-upload { display: none; } /* Hide the ugly default input */
+
+.custom-file-upload {
+    display: block;
+    padding: 12px;
+    border: 2px dashed #38bdf8;
+    color: #38bdf8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    transition: all 0.2s;
+}
+
+.custom-file-upload:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: white;
+    color: white;
+}
+
+.btn-create {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 6px;
+    color: #0c4a6e;
+    font-weight: 800;
+    cursor: pointer;
 }

@@ -106,4 +106,67 @@ const HTMLEditor = {
     }
 };
 
+// Function to handle reading a file from the user's computer
+HTMLEditor.handleFileUpload = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        const fileName = file.name;
+
+        // 1. Create a new tab with the file name
+        HTMLEditor.addTab(fileName); 
+        
+        // 2. Put the content into the editor
+        document.getElementById('code-editor').value = content;
+        
+        // 3. Update the preview and close modal
+        HTMLEditor.run();
+        HTMLEditor.closeModal();
+        
+        // Reset input so same file can be uploaded again
+        event.target.value = '';
+    };
+    reader.readAsText(file);
+};
+
+// Function to print the preview panel as a PDF
+HTMLEditor.printPDF = function() {
+    const previewFrame = document.getElementById('live-preview');
+    const content = previewFrame.contentWindow.document.documentElement.innerHTML;
+    
+    // Create a hidden iframe for printing
+    const printWindow = window.open('', '_blank', 'width=800,height=1000');
+    printWindow.document.open();
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Exported Output - CODETYPO</title>
+                <style>
+                    body { font-family: sans-serif; padding: 20px; }
+                    /* Ensure images and colors print correctly */
+                    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                </style>
+            </head>
+            <body>
+                ${content}
+                <script>
+                    window.onload = function() {
+                        window.print();
+                        window.onafterprint = function() { window.close(); };
+                    };
+                </script>
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+};
+
+HTMLEditor.startPractice = function() {
+    window.location.href = '/FRONTEND/CODE PRACTICE/All Language Coarse/HTML/html_practice_home_Beginner.html';
+
+};
+
 document.addEventListener('DOMContentLoaded', () => HTMLEditor.init());
