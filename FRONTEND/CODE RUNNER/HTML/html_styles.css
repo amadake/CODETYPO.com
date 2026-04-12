@@ -1,0 +1,219 @@
+:root {
+    --bg-dark: #0f172a;
+    --sidebar-dark: #1e293b;
+    --editor-bg: #0b1120;
+    --border-color: #334155;
+    --accent-blue: #38bdf8;
+    --accent-green: #10b981;
+    --mono-font: 'Fira Code', monospace;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- HEADER (Matched to Levels) --- */
+header {
+    background-color: var(--sidebar-dark);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(235, 220, 220, 0.05);
+    z-index: 1000;
+}
+
+/* --- WORKSPACE --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    position: relative; /* Needed for fullscreen child */
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--editor-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* --- TABS --- */
+.tabs-bar {
+    display: flex;
+    background: var(--sidebar-dark);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 10px;
+}
+.tab {
+    padding: 10px 15px;
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+    border-right: 1px solid var(--border-color);
+}
+.tab.active { background: var(--editor-bg); color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); }
+.add-btn { padding: 10px; color: var(--accent-green); cursor: pointer; font-weight: bold; }
+
+/* --- EDITOR & PREVIEW --- */
+#code-editor {
+    flex: 1;
+    padding: 20px;
+    background: transparent;
+    color: #cbd5e1;
+    font-family: var(--mono-font);
+    font-size: 16px;
+    border: none;
+    resize: none;
+    outline: none;
+    scrollbar-width: none;
+}
+#code-editor::-webkit-scrollbar { display: none; }
+
+#live-preview { width: 100%; height: 100%; border: none; background: white; }
+
+/* --- FULLSCREEN LOGIC --- */
+.panel-preview.fullscreen-mode {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    z-index: 5000;
+}
+
+/* --- ICON BUTTONS --- */
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-btn svg { width: 20px; height: 20px; fill: #94a3b8; transition: 0.2s; }
+.icon-btn:hover svg { fill: white; }
+
+.panel-header {
+    background: var(--sidebar-dark);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Target the iframe specifically */
+#live-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none; 
+}
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+#live-preview::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- CUSTOM MODAL STYLES --- */
+.custom-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.9); /* Blur/Dark effect */
+    backdrop-filter: blur(4px);
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-modal {
+    background: var(--sidebar-dark);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    width: 380px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: left;
+}
+
+.custom-modal h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: var(--accent-blue);
+    font-family: var(--mono-font);
+}
+
+.custom-modal p {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.custom-modal input {
+    width: 100%;
+    padding: 12px;
+    background: var(--editor-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: white;
+    font-family: var(--mono-font);
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+.custom-modal input:focus {
+    border-color: var(--accent-blue);
+}
+
+.modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modal-btns button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: var(--mono-font);
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: #94a3b8;
+}
+
+.btn-cancel:hover {
+    color: white;
+}
+
+.btn-create {
+    background: var(--accent-blue);
+    color: #0f172a;
+}
+
+.btn-create:hover {
+    filter: brightness(1.1);
+}

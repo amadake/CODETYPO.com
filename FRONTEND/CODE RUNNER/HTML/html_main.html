@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Workspace | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="html_styles.css">
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="index.html" style="color:var(--accent-blue); text-decoration:none; border:1px solid #334155; padding:5px 12px; border-radius:4px; font-family: 'Fira Code';">&lt; exit</a>
+            <div style="font-size:22px; font-weight:800; font-family:'Fira Code'; color: aliceblue;">CODETYPO<span style="color:var(--accent-blue);">.html</span></div>
+        </div>
+        <button onclick="HTMLEditor.run()" style="background:var(--accent-green); border:none; padding:10px 25px; border-radius:6px; font-weight:800; cursor:pointer;">▶ UPDATE PREVIEW</button>
+        <div style="color:var(--accent-green); font-family:'Fira Code'; font-size:12px;">STATUS: ACTIVE</div>
+    </header>
+
+    <main class="main-content">
+        <!-- LEFT: EDITOR -->
+        <div class="panel">
+            <div class="panel-header">
+                <div style="display:flex; gap:8px;">
+                    <div style="width:12px; height:12px; border-radius:50%; background:#f43f5e;"></div>
+                    <div style="width:12px; height:12px; border-radius:50%; background:#fbbf24;"></div>
+                    <div style="width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
+                </div>
+                <span style="font-size:12px; color:#94a3b8; font-family:'Fira Code';">SOURCE_CODE</span>
+            </div>
+            
+            <div class="tabs-bar">
+                <div id="tabs-list" style="display:flex;"></div>
+                <div class="add-btn" onclick="HTMLEditor.addTab()">+</div>
+            </div>
+
+            <textarea id="code-editor" spellcheck="false"></textarea>
+        </div>
+
+        <!-- RIGHT: PREVIEW -->
+        <div class="panel panel-preview" id="preview-panel">
+            <div class="panel-header">
+                <span style="font-size:12px; font-family:'Fira Code';color: aliceblue;">LIVE_RENDER</span>
+                <button class="icon-btn" onclick="HTMLEditor.toggleFS()" id="fs-icon-container">
+                    <!-- Maximize Icon Initial -->
+                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+            </div>
+            <iframe id="live-preview"></iframe>
+        </div>
+        <!-- Custom Filename Modal -->
+            <div id="filename-modal" class="custom-modal-overlay">
+             <div class="custom-modal">
+                 <h3>Create New File</h3>
+                  <p>Enter a name for your new HTML page:</p>
+                     <input type="text" id="new-filename-input" placeholder="e.g., about.html" spellcheck="false">
+             <div class="modal-btns">
+              <button class="btn-cancel" onclick="HTMLEditor.closeModal()">Cancel</button>
+              <button class="btn-create" onclick="HTMLEditor.confirmAddTab()">Create File</button>
+             </div>
+            </div>
+          </div>
+    </main>
+
+    <script src="html_logic.js"></script>
+</body>
+</html>
