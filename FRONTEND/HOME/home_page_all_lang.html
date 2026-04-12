@@ -4,314 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | CODETYPO.com</title>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --sidebar-dark: #1e293b;
-            --card-bg: #111827;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --code-blue: #38bdf8;
-            --code-green: #10b981;
-            --code-yellow: #facc15;
-            --code-red: #f43f5e;
-            --mono-font: 'Fira Code', monospace;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding-top: 280px; /* Space for large header + large boxes */
-            transition: padding-top 0.4s ease;
-        }
-
-        body.scrolled { padding-top: 170px; }
-
-        /* --- DYNAMIC HEADER --- */
-        header {
-            background-color: var(--sidebar-dark);
-            padding: 40px 5% 70px 5%;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        header.shrink { 
-            padding: 12px 5%; 
-            background-color: rgba(15, 23, 42, 0.95); 
-            backdrop-filter: blur(10px); 
-        }
-
-        .logo { font-size: 32px; font-weight: 800; font-family: var(--mono-font); text-decoration: none; color: white; transition: 0.4s; }
-        header.shrink .logo { font-size: 22px; }
-        .logo span { color: var(--code-blue); }
-
-        .nav-island {
-            background-color: var(--bg-dark);
-            border-radius: 8px; display: flex; align-items: center;
-            padding: 5px 15px; border: 1px solid #334155; transition: 0.4s;
-        }
-        header.shrink .nav-island { padding: 2px 10px; }
-
-        .nav-link { 
-            color: var(--text-dim); text-decoration: none; padding: 10px 15px; 
-            font-weight: 600; font-size: 14px; font-family: var(--mono-font); transition: 0.2s;
-        }
-        header.shrink .nav-link { font-size: 12px; padding: 8px 12px; }
-        .nav-link:hover { color: var(--code-blue); }
-        .active-link { color: var(--code-yellow); }
-        .btn-premium { border: 1px solid var(--code-blue); color: var(--code-blue) !important; border-radius: 4px; margin: 0 10px; }
-
-        /* --- DYNAMIC STATS BAR (WITH HANGING SQUARES) --- */
-        .stats-wrapper {
-            position: fixed;
-            top: 170px; 
-            left: 0; right: 0;
-            z-index: 1100;
-            padding: 0 5%;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        header.shrink + .stats-wrapper { top: 70px; }
-
-        .stats-bar {
-            background: var(--sidebar-dark);
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-radius: 12px;
-            height: 80px;
-            border: 1px solid #334155;
-        }
-
-        /* Large Square Transitions */
-        .big-square {
-            width: 120px; height: 120px;
-            background: var(--bg-dark); border-radius: 12px;
-            border: 4px solid var(--sidebar-dark); 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-top: -40px; /* Hanging effect */
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Shrink logic when scrolled */
-        header.shrink + .stats-wrapper .big-square {
-            width: 60px; height: 60px;
-            margin-top: 0;
-            border-width: 2px;
-            box-shadow: none;
-        }
-
-        .profile-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); opacity: 0.8; }
-
-        /* Stat items in center */
-        .stat-item { display: flex; align-items: center; gap: 10px; }
-        .stat-item .val { font-size: 22px; font-weight: bold; font-family: var(--mono-font); color: white; transition: 0.4s; }
-        header.shrink + .stats-wrapper .stat-item .val { font-size: 18px; }
-        .stat-item .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-family: var(--mono-font); }
-
-        /* Timer logic */
-        .timer-val { font-size: 22px; font-weight: bold; color: var(--code-yellow); font-family: var(--mono-font); transition: 0.4s; }
-        header.shrink + .stats-wrapper .timer-val { font-size: 14px; }
-        .timer-label { font-size: 9px; color: var(--text-dim); font-family: var(--mono-font); text-transform: uppercase; transition: 0.4s; }
-        header.shrink + .stats-wrapper .timer-label { display: none; }
-
-        /* --- 9 LANGUAGE GRID --- */
-        .main-container { max-width: 1400px; margin: 60px auto; padding: 0 20px; }
-        .editor-surface { 
-            background: var(--sidebar-dark); border-radius: 15px; 
-            padding: 50px 40px; border: 1px solid #334155;
-        }
-
-        .grid-9 {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px; margin-top: 30px;
-        }
-
-        .lang-card {
-            background: var(--card-bg); padding: 35px 25px; border-radius: 12px;
-            text-decoration: none; border: 1px solid #334155; transition: 0.3s;
-        }
-        .lang-card:hover { transform: translateY(-8px); border-color: var(--code-blue); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1); }
-        .lang-card h3 { color: white; margin: 15px 0 10px; font-family: var(--mono-font); font-size: 22px; }
-        .lang-card p { color: var(--text-dim); font-size: 13px; font-family: var(--mono-font); line-height: 1.6; margin: 0; }
-
-        /* Specific Borders */
-        .border-c { border-bottom: 4px solid var(--code-green); }
-        .border-java { border-bottom: 4px solid #f97316; }
-        .border-python { border-bottom: 4px solid var(--code-blue); }
-        .border-js { border-bottom: 4px solid var(--code-yellow); }
-        .border-cpp { border-bottom: 4px solid #6366f1; }
-        .border-php { border-bottom: 4px solid #a855f7; }
-        .border-go { border-bottom: 4px solid #22d3ee; }
-        .border-swift { border-bottom: 4px solid var(--code-red); }
-        .border-rust { border-bottom: 4px solid #ea580c; }
-
-    </style>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="home_page_all_lang.css">
 </head>
 <body>
 
     <header id="mainHeader">
         <a href="home_page_all_lang.html" class="logo">CODETYPO<span>.com</span></a>
-        <div class="nav-island">
+        <nav class="nav-island">
             <a href="home_page_all_lang.html" class="nav-link active-link">lessons.list()</a>
             <a href="../MAIN/run_tests.html" class="nav-link">run_tests()</a>
             <a href="../MAIN/play_games.html" class="nav-link">play_games()</a>
             <a href="../MAIN/view_progress.html" class="nav-link">view_progress() ▾</a>
-            <div style="width: 1px; height: 20px; background: #334155; margin: 0 10px;"></div>
+            <div class="divider"></div>
             <a href="/FRONTEND/Premium_Membership/Premium_membership_01_home.html" class="nav-link btn-premium">premium.paid</a>
-            <div style="width: 1px; height: 20px; background: #334155; margin: 0 10px;"></div>
-            <div class="nav-link" style="color: white; cursor: pointer;">aatish@root ▾</div>
-        </div>
+            <div class="divider"></div>
+            <div class="nav-link user-profile">aatish@root ▾</div>
+        </nav>
     </header>
 
     <div class="stats-wrapper">
         <div class="stats-bar">
             <!-- Hanging Profile Square -->
-            <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="profile-section">
                 <div class="big-square">
                     <img src="/FRONTEND/IMAGES/my_photo_behind.png" class="profile-img" alt="User">
                 </div>
                 <div class="rank-info">
-                    <span style="background: rgba(56, 189, 248, 0.1); color: var(--code-blue); padding: 3px 10px; border-radius: 4px; font-size: 11px; border: 1px solid var(--code-blue); font-family: var(--mono-font); font-weight: bold;">level: seed_ling_1</span>
-                    <div style="color: var(--text-dim); font-size: 10px; margin-top: 5px; font-family: var(--mono-font);">exp_to_next: 5,180</div>
+                    <span class="level-badge">level: seed_ling_1</span>
+                    <div class="exp-text">exp_to_next: 5,180</div>
                 </div>
             </div>
 
             <!-- Central Stats -->
-            <div style="display: flex; gap: 50px;">
+            <div class="stats-center">
                 <div class="stat-item">
-                    <span style="font-size: 22px;">⚡</span>
-                    <div><div class="label">velocity</div><div class="val">38 <small style="font-size: 11px; color: var(--text-dim);">wpm</small></div></div>
+                    <span class="stat-icon">⚡</span>
+                    <div>
+                        <div class="label">velocity</div>
+                        <div class="val">38 <small>wpm</small></div>
+                    </div>
                 </div>
                 <div class="stat-item">
-                    <span style="font-size: 22px;">🎯</span>
-                    <div><div class="label">accuracy</div><div class="val">94%</div></div>
+                    <span class="stat-icon">🎯</span>
+                    <div>
+                        <div class="label">accuracy</div>
+                        <div class="val">94%</div>
+                    </div>
                 </div>
                 <div class="stat-item">
-                    <span style="font-size: 22px;">🕒</span>
-                    <div><div class="label">uptime</div><div class="val">10:01</div></div>
+                    <span class="stat-icon">🕒</span>
+                    <div>
+                        <div class="label">uptime</div>
+                        <div class="val">10:01</div>
+                    </div>
                 </div>
             </div>
 
             <!-- Hanging Target Square -->
-            <div class="big-square">
+            <div class="big-square target-square">
                 <div class="timer-label">Daily_Target</div>
                 <div class="timer-val">00:00</div>
-                <div class="timer-label" style="margin-top: 4px;">/15:00</div>
+                <div class="timer-label sub-label">/15:00</div>
             </div>
         </div>
     </div>
 
-    <div class="main-container">
+    <main class="main-container">
         <div class="editor-surface">
-            <h2 style="text-align: center; font-size: 24px; margin-bottom: 50px; color: white; font-family: var(--mono-font);">
-                <span style="color: var(--code-blue);">fetch</span> Practice_Module(<span style="color: var(--code-yellow);">language</span>)
+            <h2 class="section-title">
+                <span class="code-keyword">fetch</span> Practice_Module(<span class="code-string">language</span>)
             </h2>
 
             <div class="grid-9">
                 <!-- C -->
                 <a href="/FRONTEND/All Language Coarse/C/c_practice_home_Beginner.html" class="lang-card border-c">
-                    <span style="font-size: 35px;">🎮</span>
+                    <span class="lang-emoji">🎮</span>
                     <h3>C</h3>
                     <p>#include &lt;stdio.h&gt;<br>int main() { printf("run"); }</p>
                 </a>
 
                 <!-- Java -->
                 <a href="/FRONTEND/All Language Coarse/JAVA/java_practice_home_Beginner.html" class="lang-card border-java">
-                    <span style="font-size: 35px;">☕</span>
+                    <span class="lang-emoji">☕</span>
                     <h3>Java</h3>
                     <p>public class Enterprise {<br>&nbsp;&nbsp;// static logic<br>}</p>
                 </a>
 
                 <!-- Python -->
                 <a href="/FRONTEND/All Language Coarse/PYTHON/python_practice_home_Beginner.html" class="lang-card border-python">
-                    <span style="font-size: 35px;">🐍</span>
+                    <span class="lang-emoji">🐍</span>
                     <h3>Python</h3>
                     <p>import practice<br>def main(): pass</p>
                 </a>
 
                 <!-- HTML -->
-                <a href="/FRONTEND/All Language Coarse/PYTHON/python_practice_home_Beginner.html" class="lang-card border-python">
-                    <span style="font-size: 35px;">🐍</span>
+                <a href="/FRONTEND/All Language Coarse/HTML/html_practice_home_Beginner.html" class="lang-card border-html">
+                    <span class="lang-emoji">🌐</span>
                     <h3>HTML</h3>
-                    <p>import practice<br>def main(): pass</p>
+                    <p>&lt;div class="box"&gt;<br>&nbsp;&nbsp;Hello World<br>&lt;/div&gt;</p>
                 </a>
 
                 <!-- CSS -->
                 <a href="/FRONTEND/All Language Coarse/CSS/css_practice_home_Beginner.html" class="lang-card border-css">
-                    <span style="font-size: 35px;">🎨</span>
+                    <span class="lang-emoji">🎨</span>
                     <h3>CSS</h3>
                     <p>body {<br>&nbsp;&nbsp;background: #f0f0f0;<br>}</p>
                 </a>
 
                 <!-- Rust -->
                 <a href="/FRONTEND/All Language Coarse/Rust/rust_practice_home_Beginner.html" class="lang-card border-rust">
-                    <span style="font-size: 35px;">🦀</span>
+                    <span class="lang-emoji">🦀</span>
                     <h3>Rust</h3>
                     <p>fn main() {<br>&nbsp;&nbsp;println!("safe");<br>}</p>
                 </a>
 
-                <!-- JS -->
+                <!-- JavaScript -->
                 <a href="/FRONTEND/All Language Coarse/JavaScript/js_practice_home_Beginner.html" class="lang-card border-js">
-                    <span style="font-size: 35px;">📜</span>
+                    <span class="lang-emoji">📜</span>
                     <h3>JavaScript</h3>
                     <p>const app = () => {<br>&nbsp;&nbsp;return "web";<br>}</p>
                 </a>
 
                 <!-- C++ -->
                 <a href="/FRONTEND/All Language Coarse/C++/c++_practice_home_Beginner.html" class="lang-card border-cpp">
-                    <span style="font-size: 35px;">⚙️</span>
+                    <span class="lang-emoji">⚙️</span>
                     <h3>C++</h3>
                     <p>std::cout << "speed"<br>&lt;&lt; std::endl;</p>
                 </a>
 
                 <!-- PHP -->
                 <a href="/FRONTEND/All Language Coarse/PHP/php_practice_home_Beginner.html" class="lang-card border-php">
-                    <span style="font-size: 35px;">🐘</span>
+                    <span class="lang-emoji">🐘</span>
                     <h3>PHP</h3>
                     <p>&lt;?php<br>echo "backend";<br>?&gt;</p>
                 </a>
-
-                <!-- Swift -->
-                <a href="/FRONTEND/All Language Coarse/Swift/swift_practice_home_Beginner.html" class="lang-card border-swift">
-                    <span style="font-size: 35px;">🍎</span>
-                    <h3>Swift</h3>
-                    <p>func buildApp() {<br>&nbsp;&nbsp;iOS_Core.run();<br>}</p>
-                </a>
-
-            
+            </div>
         </div>
-    </div>
+    </main>
 
-    <script>
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shrink');
-                document.body.classList.add('scrolled');
-            } else {
-                header.classList.remove('shrink');
-                document.body.classList.remove('scrolled');
-            }
-        });
-    </script>
+    <!-- External JS -->
+    <script src="home_page_all_lang.js"></script>
 </body>
 </html>
