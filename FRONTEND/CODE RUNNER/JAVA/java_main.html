@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Workspace | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="java_styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/logo final .png">
+</head>
+<body>
+
+   <header>
+    <div class="header-left">
+        <a href="/FRONTEND/CODE RUNNER/HOME/home_page_all_lang.html" class="exit-btn">&lt; exit</a>
+        <div class="logo-text">CODETYPO<span>.java</span></div>
+    </div>
+
+    <div class="header-actions">
+        <button onclick="JavaEditor.run()" class="btn-update">▶ RUN CODE</button>
+        <button onclick="JavaEditor.startPractice()" class="btn-practice">⚡ PRACTICE</button>
+        <button onclick="JavaEditor.printPDF()" class="btn-print">⎙ PRINT PDF</button>
+    </div>
+
+    <div class="header-status">COMPILER: READY</div>
+</header>
+
+<!-- MODAL WITH FILE UPLOAD -->
+<div id="filename-modal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <h3>Create New Java File</h3>
+        
+        <div class="modal-section">
+            <p>Enter class name:</p>
+            <input type="text" id="new-filename-input" placeholder="e.g., Utils.java" spellcheck="false">
+            <button class="btn-create" onclick="JavaEditor.confirmAddTab()">Create File</button>
+        </div>
+
+        <div class="modal-divider"><span>OR</span></div>
+
+        <div class="modal-section">
+            <p>Upload .java file:</p>
+            <label for="system-file-upload" class="custom-file-upload">
+                📁 Choose Java File
+            </label>
+            <input type="file" id="system-file-upload" accept=".java,.txt" onchange="JavaEditor.handleFileUpload(event)">
+        </div>
+
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="JavaEditor.closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+    <main class="main-content">
+        <!-- LEFT: EDITOR -->
+        <div class="panel">
+            <div class="panel-header">
+                <div style="display:flex; gap:8px;">
+                    <div style="width:12px; height:12px; border-radius:50%; background:#f43f5e;"></div>
+                    <div style="width:12px; height:12px; border-radius:50%; background:#fbbf24;"></div>
+                    <div style="width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
+                </div>
+                <span style="font-size:12px; color:#EA580C; font-family:'Fira Code';">SOURCE_CODE</span>
+            </div>
+            
+            <div class="tabs-bar">
+                <div id="tabs-list" style="display:flex;"></div>
+                <div class="add-btn" onclick="JavaEditor.addTab()">+</div>
+            </div>
+
+            <textarea id="code-editor" spellcheck="false"></textarea>
+        </div>
+
+        <!-- RIGHT: CONSOLE -->
+        <div class="panel panel-preview" id="preview-panel">
+            <div class="panel-header">
+                <span style="font-size:12px; font-family:'Fira Code';color: #EA580C">TERMINAL_OUTPUT</span>
+                <button class="icon-btn" onclick="JavaEditor.toggleFS()" id="fs-icon-container">
+                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+            </div>
+            <div id="console-output"></div>
+        </div>
+
+        <!-- Inside the <main> tag, replace the RIGHT: PREVIEW/CONSOLE panel -->
+<div class="panel panel-preview" id="preview-panel">
+    <div class="panel-header">
+        <span style="font-size:12px; font-family:'Fira Code';color: #F97316">TERMINAL & INPUT</span>
+        <button class="icon-btn" onclick="JavaEditor.toggleFS()" id="fs-icon-container">
+            <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+    </div>
+
+    <!-- NEW: INPUT AREA -->
+    <div class="input-section">
+        <div class="section-label">USER_INPUT (stdin)</div>
+        <textarea id="user-input" placeholder="Enter inputs here (one per line)..." spellcheck="false"></textarea>
+    </div>
+
+    <!-- CONSOLE OUTPUT -->
+    <div class="section-label">OUTPUT</div>
+    <div id="console-output"></div>
+</div>
+
+    </main>
+
+    <script src="java_logic.js"></script>
+</body>
+</html>

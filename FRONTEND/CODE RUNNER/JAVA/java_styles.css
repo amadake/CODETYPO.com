@@ -1,0 +1,467 @@
+/* Keep all your root and shared styles from the HTML version */
+:root {
+    --bg-dark: #0f172a;
+    --sidebar-dark: #1e293b;
+    --editor-bg: #0b1120;
+    --border-color: #334155;
+    --accent-blue: #38bdf8;
+    --accent-green: #10b981;
+    --mono-font: 'Fira Code', monospace;
+}
+
+/* ... (Include all header, modal, and layout CSS from your original file) ... */
+
+/* UPDATED FOR JAVA TERMINAL LOOK */
+#console-output {
+    flex: 1;
+    padding: 20px;
+    background: #000000; /* True black terminal */
+    color: #ffffff;
+    font-family: var(--mono-font);
+    font-size: 14px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+/* Scrollbar for terminal */
+#console-output::-webkit-scrollbar {
+    width: 8px;
+}
+#console-output::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+/* Fullscreen adjustment for console */
+.panel-preview.fullscreen-mode {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    z-index: 5000;
+}
+
+/* All other buttons/headers remain the same as your HTML code */
+:root {
+    --bg-dark: #0f172a;
+    --sidebar-dark: #1e293b;
+    --editor-bg: #0b1120;
+    --border-color: #334155;
+    --accent-blue: #38bdf8;
+    --accent-green: #10b981;
+    --mono-font: 'Fira Code', monospace;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- HEADER LAYOUT --- */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+    background: #1e293b; /* Panel Dark */
+    border-bottom: 1px solid #334155;
+    height: 65px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- LOGO & EXIT --- */
+.exit-btn {
+    color: var(--accent-blue, #38bdf8);
+    text-decoration: none;
+    border: 1px solid #334155;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.exit-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: var(--accent-blue, #38bdf8);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Fira Code', monospace;
+    color: #f1f5f9;
+}
+
+.logo-text span {
+    color:#EA580C;
+}
+
+/* --- BUTTON GROUP --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Gap between Update and Practice */
+}
+
+/* General button styling */
+.header-actions button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+/* Update Preview Button (Green) */
+.btn-update {
+    background: #10b981; 
+    color: #064e3b;
+}
+
+.btn-update:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+/* Practice Mode Button (Indigo) */
+.btn-practice {
+    background: #6366f1;
+    color: white;
+    box-shadow: 0 3px 0 #4338ca; /* Indigo shadow */
+}
+
+.btn-practice:hover {
+    background: #818cf8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 #4338ca;
+}
+
+.btn-practice:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+/* --- STATUS INDICATOR --- */
+.header-status {
+    color: #10b981;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+/* --- WORKSPACE --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    position: relative; /* Needed for fullscreen child */
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--editor-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* --- TABS --- */
+.tabs-bar {
+    display: flex;
+    background: var(--sidebar-dark);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 10px;
+}
+.tab {
+    padding: 10px 15px;
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+    border-right: 1px solid var(--border-color);
+}
+.tab.active { background: var(--editor-bg); color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); }
+.add-btn { padding: 10px; color: var(--accent-green); cursor: pointer; font-weight: bold; }
+
+/* --- EDITOR & PREVIEW --- */
+#code-editor {
+    flex: 1;
+    padding: 20px;
+    background: transparent;
+    color: #cbd5e1;
+    font-family: var(--mono-font);
+    font-size: 16px;
+    border: none;
+    resize: none;
+    outline: none;
+    scrollbar-width: none;
+}
+#code-editor::-webkit-scrollbar { display: none; }
+
+#live-preview { width: 100%; height: 100%; border: none; background: white; }
+
+/* --- FULLSCREEN LOGIC --- */
+.panel-preview.fullscreen-mode {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    z-index: 5000;
+}
+
+/* --- ICON BUTTONS --- */
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-btn svg { width: 20px; height: 20px; fill: #94a3b8; transition: 0.2s; }
+.icon-btn:hover svg { fill: white; }
+
+.panel-header {
+    background: var(--sidebar-dark);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Target the iframe specifically */
+#live-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none; 
+}
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+#live-preview::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- CUSTOM MODAL STYLES --- */
+.custom-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.9); /* Blur/Dark effect */
+    backdrop-filter: blur(4px);
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-modal {
+    background: var(--sidebar-dark);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    width: 380px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: left;
+}
+
+.custom-modal h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: var(--accent-blue);
+    font-family: var(--mono-font);
+}
+
+.custom-modal p {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.custom-modal input {
+    width: 100%;
+    padding: 12px;
+    background: var(--editor-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: white;
+    font-family: var(--mono-font);
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+.custom-modal input:focus {
+    border-color: var(--accent-blue);
+}
+
+.modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modal-btns button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: var(--mono-font);
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: #94a3b8;
+}
+
+.btn-cancel:hover {
+    color: white;
+}
+
+.btn-create {
+    background: var(--accent-blue);
+    color: #0f172a;
+}
+
+.btn-create:hover {
+    filter: brightness(1.1);
+}
+
+/* --- PRINT BUTTON (Header) --- */
+.btn-print {
+    background: #facc15 !important; /* Gold */
+    color: #422006 !important;
+    box-shadow: 0 3px 0 #a16207;
+}
+.btn-print:hover {
+    background: #fde047 !important;
+    transform: translateY(-1px);
+}
+
+/* --- MODAL UPDATES --- */
+.custom-modal {
+    max-width: 450px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.modal-section { margin-bottom: 20px; }
+
+.modal-divider {
+    margin: 25px 0;
+    position: relative;
+    border-top: 1px solid #334155;
+}
+.modal-divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e293b;
+    padding: 0 15px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* File Upload Button Styling */
+#system-file-upload { display: none; } /* Hide the ugly default input */
+
+.custom-file-upload {
+    display: block;
+    padding: 12px;
+    border: 2px dashed #38bdf8;
+    color: #38bdf8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    transition: all 0.2s;
+}
+
+.custom-file-upload:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: white;
+    color: white;
+}
+
+.btn-create {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 6px;
+    color: #0c4a6e;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+
+
+/* Add this to your java_styles.css */
+.input-section {
+    height: 150px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.section-label {
+    background: #1e293b;
+    padding: 5px 15px;
+    font-size: 10px;
+    color: #64748b;
+    font-family: var(--mono-font);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#user-input {
+    flex: 1;
+    background: #0f172a;
+    color: #38bdf8;
+    border: none;
+    padding: 10px;
+    font-family: var(--mono-font);
+    resize: none;
+    outline: none;
+}
+
+#console-output {
+    flex: 1; /* Takes up remaining space */
+    background: #000;
+    color: #fff;
+    padding: 15px;
+    font-family: var(--mono-font);
+    overflow-y: auto;
+}
