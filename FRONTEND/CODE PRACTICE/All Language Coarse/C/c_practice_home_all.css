@@ -46,7 +46,7 @@ header.shrink {
 
 .logo { font-size: 32px; font-weight: 800; font-family: var(--mono-font); text-decoration: none; color: white; transition: 0.4s; }
 header.shrink .logo { font-size: 22px; }
-.logo span { color: var(--code-blue); }
+.logo span { color: #64748B; }
 
 .nav-island {
     background-color: var(--bg-dark);
@@ -161,7 +161,7 @@ header.shrink + .stats-wrapper .goal-sub { display: none; }
 }
 
 .sidebar-item:hover { background: #232f3e; color: white; }
-.sidebar-item.active { background-color: var(--bg-dark); color: var(--code-blue); border-left: 3px solid var(--code-blue); }
+.sidebar-item.active { background-color: var(--bg-dark); color: #64748B; border-left: 3px solid #64748B; }
 
 .lesson-container {
     flex-grow: 1; background-color: var(--sidebar-dark); border-radius: 12px;

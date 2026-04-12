@@ -64,7 +64,7 @@ const initUploader = () => {
     // 3. INITIALIZE SESSION
     startBtn.addEventListener('click', () => {
         // Redirect to practice environment
-        window.location.href = 'c_code_user.html';
+        window.location.href = 'c_code_user_code.html';
     });
 
     // 4. REMOVE SELECTED FILE

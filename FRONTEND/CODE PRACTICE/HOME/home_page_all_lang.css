@@ -169,13 +169,25 @@ header.shrink + .stats-wrapper .target-square .sub-label { display: none; }
 .lang-card h3 { color: white; margin: 15px 0 10px; font-family: var(--mono-font); font-size: 22px; }
 .lang-card p { color: var(--text-dim); font-size: 13px; font-family: var(--mono-font); line-height: 1.6; margin: 0; }
 
-/* Language Specific Borders */
-.border-c { border-bottom: 4px solid var(--code-green); }
-.border-java { border-bottom: 4px solid #f97316; }
-.border-python { border-bottom: 4px solid var(--code-blue); }
-.border-html { border-bottom: 4px solid #e34c26; }
-.border-css { border-bottom: 4px solid #264de4; }
-.border-js { border-bottom: 4px solid var(--code-yellow); }
-.border-cpp { border-bottom: 4px solid #6366f1; }
-.border-php { border-bottom: 4px solid #a855f7; }
-.border-rust { border-bottom: 4px solid #ea580c; }
+.border-c { border-bottom: 4px solid #64748B; }      /* Slate Gray */
+.border-java { border-bottom: 4px solid #EA580C; }   /* Burnt Orange */
+.border-python { border-bottom: 4px solid #F59E0B; } /* Amber */
+.border-html { border-bottom: 4px solid #EF4444; }   /* Red */
+.border-css { border-bottom: 4px solid #10B981; }    /* Emerald */
+.border-js { border-bottom: 4px solid #4d0243; }     /* Purple */
+.border-cpp { border-bottom: 4px solid #7C3AED; }    /* Purple */
+.border-php { border-bottom: 4px solid #EC4899; }    /* Pink */
+.border-rust { border-bottom: 4px solid #8B5E3C; }   /* Brown */
+
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

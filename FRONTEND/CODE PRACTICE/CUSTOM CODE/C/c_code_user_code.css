@@ -1,0 +1,109 @@
+        :root {
+            --bg-dark: #0f172a;
+            --sidebar-dark: #1e293b;
+            --editor-bg: #0b1120;
+            --text-ghost: #475569;
+            --text-correct: #10b981;
+            --text-error: #f43f5e;
+            --accent-blue: #38bdf8;
+            --code-yellow: #facc15;
+            --key-bg: #334155;
+            --mono-font: 'Fira Code', monospace;
+        }
+
+        body { 
+            margin: 0; font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-dark); color: #f1f5f9;
+            overflow: hidden; 
+        }
+
+        /* --- START OVERLAY --- */
+        #start-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: var(--bg-dark); z-index: 2000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center;
+        }
+        .start-btn {
+            background: var(--accent-blue); color: #0f172a; border: none; padding: 20px 60px;
+            font-size: 24px; font-weight: 800; border-radius: 8px; cursor: pointer;
+            box-shadow: 0 4px 0 #0369a1; margin-top: 25px;
+            font-family: var(--mono-font); text-transform: uppercase;
+        }
+
+        header {
+            background-color: var(--sidebar-dark); padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-size: 22px; font-weight: 800; font-family: var(--mono-font); text-decoration: none; color: white; }
+        .logo span { color: var(--accent-blue); }
+        .timer-box { font-size: 32px; font-family: var(--mono-font); font-weight: 700; color: var(--code-yellow); background: rgba(0,0,0,0.2); padding: 5px 20px; border-radius: 6px; }
+        
+        .nav-btn { cursor: pointer; padding: 10px 15px; border-radius: 6px; font-size: 13px; font-weight: 600; background: var(--bg-dark); border: 1px solid #334155; color: white; font-family: var(--mono-font); }
+
+        .editor-container {
+            max-width: 1100px; margin: 25px auto;
+            background: var(--editor-bg); border-radius: 12px;
+            border: 1px solid #334155; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .editor-tab {
+            background: var(--sidebar-dark); padding: 12px 20px;
+            font-family: var(--mono-font); font-size: 12px; color: #94a3b8;
+            border-bottom: 1px solid #334155; display: flex; gap: 10px;
+        }
+
+        .code-area { 
+            padding: 40px; font-family: var(--mono-font); font-size: 22px; 
+            line-height: 1.6; white-space: pre-wrap; height: 300px;
+            overflow-y: scroll; scrollbar-width: none;
+        }
+
+        .char { color: var(--text-ghost); position: relative; }
+        .char.correct { color: var(--text-correct); }
+        .char.incorrect { color: var(--text-error); background: rgba(244, 63, 94, 0.2); border-radius: 2px; }
+        .char.current::after { 
+            content: ""; position: absolute; left: 0; bottom: -2px; 
+            width: 100%; height: 3px; background: var(--accent-blue); 
+            animation: blink 0.8s infinite; 
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- KEYBOARD STYLES --- */
+        .kb-container { text-align: center; margin-top: 10px; padding-bottom: 20px; }
+        .keyboard { background: #1e293b; padding: 12px; border-radius: 12px; display: inline-block; border: 1px solid #334155; }
+        .kb-row { display: flex; justify-content: center; gap: 4px; margin-bottom: 4px; }
+        
+        .key { 
+            background: var(--key-bg); width: 48px; height: 48px; border-radius: 6px; 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 11px; font-weight: 600; color: #94a3b8; box-shadow: 0 3px 0 #0f172a; 
+            font-family: var(--mono-font); transition: 0.05s;
+        }
+
+        /* The specific highlight for the NEXT key to press */
+        .key.active-target { 
+            border: 2px solid var(--accent-blue); 
+            color: var(--accent-blue); 
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Visual feedback when any key is pressed */
+        .key.pressed { 
+            background: var(--accent-blue) !important; 
+            color: #0f172a !important; 
+            transform: translateY(2px); 
+            box-shadow: none; 
+        }
+
+        .key.wide { width: 80px; }
+        .key.space { width: 300px; }
+
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 3000;
+        }
+        .modal { background: var(--sidebar-dark); width: 350px; border-radius: 12px; padding: 30px; border: 1px solid var(--accent-blue); }
+        #pause-indicator { position: fixed; bottom: 30px; right: 30px; background: rgba(30, 41, 59, 0.95); border: 1px solid var(--accent-blue); padding: 15px 25px; border-radius: 8px; display: none; align-items: center; gap: 15px; }
