@@ -59,14 +59,15 @@
     </div>
 </div>
 
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint num1, num2, sum;\n\nprintf("Enter first number: ");\nscanf("%d", &num1);\n\nprintf("Enter second number: ");\nscanf("%d", &num2);\n\nsum = num1 + num2;\n\nprintf("\\nYou entered:\\n");\nprintf("Num1 = %d\\n", num1);\nprintf("Num2 = %d\\n", num2);\n\nprintf("Sum = %d\\n", sum);\n\nreturn 0;\n}`,
-        resultPage: "level_4_result.html"
+        resultPage: "level_4_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 </body>

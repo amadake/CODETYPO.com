@@ -5,14 +5,18 @@
     <title>Level 1: C Syntax | CODETYPO.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="all_level.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/logo final .png">
+    <!-- Fixed spaces in favicon path -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/logo%20final%20.png">
 </head>
 <body>
+
 <div id="start-overlay">
     <div style="font-family: var(--mono-font); color: var(--text-correct); margin-bottom: 10px;">> initializing_level_1.com</div>
     <h1>Language: C (Level 1)</h1>
+    <!-- Ensure this function exists in all_level.js or below -->
     <button class="start-btn" onclick="startGame()">Execute Lesson</button>
 </div>
+
 <header>
     <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
         <a href="c_practice_home_Beginner.html" class="nav-btn" style="text-decoration: none;">&lt; exit</a>
@@ -31,15 +35,16 @@
     <div class="editor-container">
         <div class="editor-tab">
             <div class="tab-dots">
-                <div class="tab-dot" style="background: #f43f5e;"></div> <!-- Red -->
-                <div class="tab-dot" style="background: #fbbf24;"></div> <!-- Yellow -->
-                <div class="tab-dot" style="background: #10b981;"></div> <!-- Green -->
+                <div class="tab-dot" style="background: #f43f5e;"></div>
+                <div class="tab-dot" style="background: #fbbf24;"></div>
+                <div class="tab-dot" style="background: #10b981;"></div>
             </div>
             <div class="tab-title">CODETYPO.com</div>
         </div>
         
         <div id="code-display" class="code-area"></div>
-        <input type="text" id="hidden-input" autofocus>
+        <!-- IMPORTANT: Needs to be focusable for typing -->
+        <input type="text" id="hidden-input" style="position: absolute; opacity: 0; pointer-events: none;">
     </div>
     <div class="kb-container" id="visual-keyboard"></div>
 </main>
@@ -57,15 +62,36 @@
         <button class="nav-btn" style="width: 100%;" onclick="toggleModal('sound-modal', false)">Save & Close</button>
     </div>
 </div>
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+
+<!-- Scripts with encoded URL paths -->
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
-    GameEngine.init({
-        code: `#include <stdio.h>\nint main() {\nprintf("Welcome to C Programming\\n");\nprintf("This is Beginner Level\\n");\nprintf("Practice Typing Code\\n");\nreturn 0;\n}`,
-        resultPage: "level_1_result.html"
-    });
+// Glue functions to connect HTML to GameEngine
+function startGame() {
+    document.getElementById('start-overlay').style.display = 'none';
+    const input = document.getElementById('hidden-input');
+    if(input) input.focus();
+}
+
+function toggleModal(id, show) {
+    document.getElementById(id).style.display = show ? 'flex' : 'none';
+}
+
+// Initialize the engine
+GameEngine.init({
+    code: `#include <stdio.h>
+int main() {
+printf("Welcome to C Programming\\n");
+printf("This is Beginner Level\\n");
+printf("Practice Typing Code\\n");
+return 0;
+}`,
+    resultPage: "level_1_result.html",
+    timeLimit: 180  // <--- Different time for this page
+});
 </script>
 </body>
 </html>

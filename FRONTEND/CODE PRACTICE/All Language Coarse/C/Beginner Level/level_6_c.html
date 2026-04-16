@@ -61,17 +61,15 @@
     </div>
 </div>
 
-<!-- EXTERNAL MODULES -->
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
-    // INITIALIZATION FOR LEVEL 6
-    // Using \\n to escape newlines for visual display in the editor
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint i, num, sum = 0;\n\nprintf("Enter a number: ");\nscanf("%d", &num);\n\nprintf("\\\\nMultiplication Table:\\\\n");\nfor(i = 1; i <= 10; i++) {\nprintf("%d x %d = %d\\\\n", num, i, num * i);\nsum += i;\n}\n\nprintf("\\\\nSum of first 10 factors = %d\\\\n", sum);\n\nreturn 0;\n}`,
-        resultPage: "level_6_result.html"
+        resultPage: "level_6_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 

@@ -1,9 +1,9 @@
-// game-engine.js
 const GameEngine = {
     code: "",
     resultPage: "",
     currentIndex: 0,
-    timeLeft: 180,
+    initialTime: 0, // Dynamic starting time
+    timeLeft: 0,    // Current countdown
     timerId: null,
     totalErrors: 0,
     inactivityTimer: null,
@@ -14,10 +14,26 @@ const GameEngine = {
         this.code = config.code;
         this.resultPage = config.resultPage;
         
-        // Build the UI
+        // Set dynamic time: Use config value or default to 180
+        this.initialTime = config.timeLimit || 180; 
+        this.timeLeft = this.initialTime;
+
+        // Reset state for new levels
+        this.currentIndex = 0;
+        this.totalErrors = 0;
+        this.isPaused = false;
+        
+        // Initialize UI
+        this.updateTimerDisplay();
         Keyboard.init('visual-keyboard');
         this.setupText();
         this.setupEventListeners();
+    },
+
+    updateTimerDisplay() {
+        let m = Math.floor(this.timeLeft / 60);
+        let s = this.timeLeft % 60;
+        document.getElementById('timer').textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
     },
 
     setupText() {
@@ -41,7 +57,6 @@ const GameEngine = {
         spans.forEach((s, i) => s.classList.toggle('current', i === this.currentIndex));
         spans[this.currentIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
-        // Call Keyboard Tool
         Keyboard.highlight(this.code[this.currentIndex]);
     },
 
@@ -50,14 +65,16 @@ const GameEngine = {
         this.timerId = setInterval(() => {
             if (!this.isPaused) {
                 this.timeLeft--;
-                let m = Math.floor(this.timeLeft / 60), s = this.timeLeft % 60;
-                document.getElementById('timer').textContent = `0${m}:${s < 10 ? '0' : ''}${s}`;
+                this.updateTimerDisplay();
                 if (this.timeLeft <= 0) this.finishLevel(true);
             }
         }, 1000);
     },
 
     setupEventListeners() {
+        // Use {once: true} or check if listener exists to prevent multiple bindings if init is called twice
+        if (this.eventBound) return; 
+        
         window.addEventListener('keydown', (e) => {
             if (document.getElementById('start-overlay').style.display !== 'none') return;
 
@@ -100,22 +117,21 @@ const GameEngine = {
             }
             this.updateUI();
         });
+        this.eventBound = true;
     },
 
     finishLevel(failed) {
         clearInterval(this.timerId);
-        const totalSec = 180 - this.timeLeft;
+        const totalSec = this.initialTime - this.timeLeft;
         const wpm = Math.round((this.currentIndex / 5) / (totalSec / 60)) || 0;
         const acc = Math.round(((this.currentIndex - this.totalErrors) / this.currentIndex) * 100) || 0;
         window.location.href = `${this.resultPage}?chars=${this.currentIndex}&errors=${this.totalErrors}&sec=${totalSec}&wpm=${wpm}&acc=${acc}&failed=${failed}`;
     }
 };
 
-// Global helper for the Start button
 function startGame() {
     document.getElementById('start-overlay').style.display = 'none';
     document.getElementById('hidden-input').focus();
-    // Logic starts via GameEngine.init called in the HTML
 }
 
 function toggleModal(id, show) {

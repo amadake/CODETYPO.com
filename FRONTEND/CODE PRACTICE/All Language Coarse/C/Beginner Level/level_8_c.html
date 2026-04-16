@@ -61,15 +61,15 @@
     </div>
 </div>
 
-<!-- EXTERNAL MODULES -->
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint arr[5];\nint i, sum = 0;\nfloat avg;\n\nprintf("Enter 5 numbers:\\\\n");\n\nfor(i = 0; i < 5; i++) {\nscanf("%d", &arr[i]);\nsum += arr[i];\n}\n\navg = sum / 5.0;\n\nprintf("\\\\nNumbers entered:\\\\n");\nfor(i = 0; i < 5; i++) {\nprintf("%d ", arr[i]);\n}\n\nprintf("\\\\nSum = %d\\\\n", sum);\nprintf("Average = %.2f\\\\n", avg);\n\nreturn 0;\n}`,
-        resultPage: "level_8_result.html"
+        resultPage: "level_8_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 

@@ -61,17 +61,15 @@
     </div>
 </div>
 
-<!-- EXTERNAL MODULES -->
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
-<script>
-    // INITIALIZATION FOR LEVEL 5
-    // Note: \\n is used to ensure the backslash appears correctly in the code display
+<script>    
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint num;\n\nprintf("Enter a number: ");\nscanf("%d", &num);\n\nif(num % 2 == 0)\nprintf("The number is Even\\\\n");\nelse\nprintf("The number is Odd\\\\n");\n\nif(num > 0)\nprintf("The number is Positive\\\\n");\nelse if(num < 0)\nprintf("The number is Negative\\\\n");\nelse\nprintf("The number is Zero\\\\n");\n\nreturn 0;\n}`,
-        resultPage: "level_5_result.html"
+        resultPage: "level_5_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 

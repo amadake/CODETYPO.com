@@ -60,14 +60,16 @@
         <button class="nav-btn" style="width: 100%;" onclick="toggleModal('sound-modal', false)">Save & Close</button>
     </div>
 </div>
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint choice, a, b;\n\nprintf("1. Add\\\\n2. Sub\\\\n3. Multi\\\\n4. Exit\\\\n");\nprintf("Enter choice: ");\nscanf("%d", &choice);\n\nif(choice >= 1 && choice <= 3) {\nprintf("Enter two numbers: ");\nscanf("%d %d", &a, &b);\n}\n\nswitch(choice) {\ncase 1:\nprintf("Sum = %d\\\\n", a + b);\nbreak;\ncase 2:\nprintf("Sub = %d\\\\n", a - b);\nbreak;\ncase 3:\nprintf("Result = %d\\\\n", a * b);\nbreak;\ncase 4:\nprintf("Exiting...\\\\n");\nbreak;\ndefault:\nprintf("Invalid choice\\\\n");\n}\n\nreturn 0;\n}`,
-        resultPage: "level_10_result.html"
+        resultPage: "level_10_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 </body>

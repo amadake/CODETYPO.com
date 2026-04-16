@@ -61,16 +61,16 @@
     </div>
 </div>
 
-<!-- EXTERNAL SCRIPTS -->
-<script src="/FRONTEND/All Language Coarse/KEYBOARD/keyboard.js"></script>
-<script src="/FRONTEND/All Language Coarse/Audio/audio.js"></script>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
 <script src="all_level.js"></script>
 
 <script>
     // CLEAN MODULAR INITIALIZATION FOR LEVEL 3
     GameEngine.init({
         code: `#include <stdio.h>\n\nint main() {\nint a = 10;\nint b = 5;\n\nint sum = a + b;\nint diff = a - b;\nint product = a * b;\n\nprintf("Value of a = %d\\n", a);\nprintf("Value of b = %d\\n", b);\n\nprintf("\\nResults:\\n");\nprintf("Sum = %d\\n", sum);\nprintf("Difference = %d\\n", diff);\nprintf("Product = %d\\n", product);\n\nreturn 0;\n}`,
-        resultPage: "level_3_result.html"
+        resultPage: "level_3_result.html",
+        timeLimit: 180  // <--- Different time for this page
     });
 </script>
 

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Workspace | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="python_styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/main_logo.png">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <a href="/FRONTEND/HOME/home.html" class="exit-btn">&lt; exit</a>
+        <div class="logo-text">CODETYPO<span>.py</span></div>
+    </div>
+
+    <div class="header-actions">
+        <button onclick="PyEditor.run()" class="btn-update" id="run-btn">▶ RUN PYTHON</button>
+        <button onclick="PyEditor.startPractice()" class="btn-practice">⚡ PRACTICE</button>
+        <button onclick="PyEditor.printPDF()" class="btn-print">⎙ PRINT PDF</button>
+    </div>
+
+    <div class="header-status" id="status-indicator">STATUS: LOADING ENGINE...</div>
+</header>
+
+<div id="filename-modal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <h3>Create New Python File</h3>
+        <div class="modal-section">
+            <p>Enter filename:</p>
+            <input type="text" id="new-filename-input" placeholder="main.py" spellcheck="false">
+            <button class="btn-create" onclick="PyEditor.confirmAddTab()">Create File</button>
+        </div>
+        <div class="modal-divider"><span>OR</span></div>
+        <div class="modal-section">
+            <p>Upload .py file:</p>
+            <label for="system-file-upload" class="custom-file-upload">📁 Choose Python File</label>
+            <input type="file" id="system-file-upload" accept=".py,.txt" onchange="PyEditor.handleFileUpload(event)">
+        </div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="PyEditor.closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<main class="main-content">
+    <!-- LEFT: EDITOR -->
+    <div class="panel">
+        <div class="panel-header">
+            <div style="display:flex; gap:8px;">
+                <div style="width:12px; height:12px; border-radius:50%; background:#f43f5e;"></div>
+                <div style="width:12px; height:12px; border-radius:50%; background:#fbbf24;"></div>
+                <div style="width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
+            </div>
+            <span style="font-size:12px; color:#F97316; font-family:'Fira Code';">PYTHON_SOURCE</span>
+        </div>
+        
+        <div class="tabs-bar">
+            <div id="tabs-list" style="display:flex;"></div>
+            <div class="add-btn" onclick="PyEditor.addTab()">+</div>
+        </div>
+
+        <textarea id="code-editor" spellcheck="false" placeholder="Write Python code here..."></textarea>
+    </div>
+
+    <!-- RIGHT: TERMINAL OUTPUT -->
+    <div class="panel panel-preview" id="preview-panel">
+        <div class="panel-header">
+            <span style="font-size:12px; font-family:'Fira Code';color: #F97316">CONSOLE_OUTPUT</span>
+            <button class="icon-btn" onclick="PyEditor.toggleFS()" id="fs-icon-container">
+                <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            </button>
+        </div>
+        <div id="console-output"></div>
+    </div>
+</main>
+
+<!-- PRINT MODAL -->
+<div id="print-modal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <h3>Print Python Project</h3>
+        <p>Author Name:</p>
+        <input type="text" id="pdf-username-input" placeholder="Your Name">
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="PyEditor.closePrintModal()">Cancel</button>
+            <button class="btn-create" style="background:#facc15; color:#422006;" onclick="PyEditor.confirmPrint()">Generate PDF</button>
+        </div>
+    </div>
+</div>
+
+<script src="python_logic.js"></script>
+</body>
+</html>

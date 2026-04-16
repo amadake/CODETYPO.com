@@ -111,3 +111,63 @@ header {
 /* Mac dots */
 .dots { display: flex; gap: 8px; }
 .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+
+/* --- HEADER BUTTON GROUP --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-actions button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.btn-update {
+    background: var(--accent-green);
+    color: #064e3b;
+}
+
+.btn-update:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+.btn-practice {
+    background: var(--accent-indigo);
+    color: white;
+    box-shadow: 0 3px 0 #4338ca;
+}
+
+.btn-practice:hover {
+    background: #818cf8;
+    transform: translateY(-1px);
+}
+
+.btn-print {
+    background: var(--accent-gold) !important;
+    color: #422006 !important;
+    box-shadow: 0 3px 0 #a16207;
+}
+
+.btn-print:hover {
+    background: #fde047 !important;
+    transform: translateY(-1px);
+}
+
+.header-status {
+    color: var(--accent-green);
+    font-family: var(--mono-font);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
