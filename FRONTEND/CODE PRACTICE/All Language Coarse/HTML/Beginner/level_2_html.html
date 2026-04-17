@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Level 2: HTML Syntax | CODETYPO.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="all_level.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/FRONTEND/IMAGES/logo final .png">
+</head>
+<body>
+<div id="start-overlay">
+    <div style="font-family: var(--mono-font); color: var(--text-correct); margin-bottom: 10px;">> initializing_level_2.com</div>
+    <h1>Language: HTML (Level 2)</h1>
+    <button class="start-btn" onclick="startGame()">Execute Lesson</button>
+</div>
+<header>
+    <div class="header-left" style="display: flex; align-items: center; gap: 20px;">
+        <a href="html_practice_home_Beginner.html" class="nav-btn" style="text-decoration: none;">&lt; exit</a>
+        <div class="logo">CODETYPO<span>.com</span></div>
+    </div>
+    
+    <div class="timer-box" id="timer">03:00</div>
+    
+    <div class="header-right">
+        <div class="nav-btn" onclick="location.reload()">~/reset</div>
+        <div class="nav-btn" onclick="toggleModal('sound-modal', true)">audio_cfg</div>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="editor-container">
+        <div class="editor-tab">
+            <div class="tab-dots">
+                <div class="tab-dot" style="background: #f43f5e;"></div> <!-- Red -->
+                <div class="tab-dot" style="background: #fbbf24;"></div> <!-- Yellow -->
+                <div class="tab-dot" style="background: #10b981;"></div> <!-- Green -->
+            </div>
+            <div class="tab-title">CODETYPO.com</div>
+        </div>
+        
+        <div id="code-display" class="code-area"></div>
+        <input type="text" id="hidden-input" autofocus>
+    </div>
+    <div class="kb-container" id="visual-keyboard"></div>
+</main>
+
+<div id="pause-indicator">
+    <div style="width:12px; height:12px; background:var(--code-yellow); border-radius:50%;"></div>
+    <div style="font-family: var(--mono-font); font-size: 13px;">STATUS: PAUSED <br><span style="color: #64748b; font-size: 11px;">Keep typing to resume</span></div>
+</div>
+
+<div class="modal-overlay" id="sound-modal">
+    <div class="modal">
+        <h2>Audio Configuration</h2>
+        <label style="cursor:pointer;"><input type="checkbox" checked id="s-typing"> Typing Clicks</label><br><br>
+        <label style="cursor:pointer;"><input type="checkbox" checked id="s-error"> Error Beeps</label><br><br>
+        <button class="nav-btn" style="width: 100%;" onclick="toggleModal('sound-modal', false)">Save & Close</button>
+    </div>
+</div>
+<script src="/FRONTEND/KEYBOARD/keyboard.js"></script>
+<script src="/FRONTEND/Audio/audio.js"></script>
+<script src="all_level.js"></script>
+
+<script>
+    GameEngine.init({
+        code: `<section class="about">
+<h2>About Me</h2>
+<p>Hello! My name is John and I love web development.</p>
+<p>I specialize in HTML, CSS, JavaScript and React.</p>
+<ul>
+<li>Responsive Design</li>
+<li>Clean Code</li>
+<li>UI/UX Focused</li>
+</ul>
+</section>`,
+        resultPage: "level_2_result.html",
+        timeLimit: 180  // <--- Different time for this page
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
