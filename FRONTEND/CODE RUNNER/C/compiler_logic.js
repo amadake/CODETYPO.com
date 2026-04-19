@@ -1,121 +1,87 @@
-// compiler_logic.js
-const Compiler = {
-    outputBox: null,
-    editor: null,
-    isWaitingForInput: false,
-    inputQueue: [],
-    currentLine: 0,
-    variables: {},
+const FileManager = {
+    files: [{ name: 'main.c', content: '#include <stdio.h>\n\nint main() {\n    printf("Hello World");\n    return 0;\n}' }],
+    activeIdx: 0,
 
-    init(editorId, outputId) {
-        this.editor = document.getElementById(editorId);
-        this.outputBox = document.getElementById(outputId);
+    openNewFileModal() { document.getElementById('file-modal').style.display = 'block'; },
+    closeModal() { document.getElementById('file-modal').style.display = 'none'; },
+
+    createNewFile() {
+        const nameInput = document.getElementById('new-file-name');
+        const name = nameInput.value || `file${this.files.length + 1}.c`;
+        this.files.push({ name: name, content: '// New C File\n' });
+        nameInput.value = '';
+        this.closeModal();
+        this.renderTabs();
+        this.switchTab(this.files.length - 1);
     },
 
-    // GCC-style Error Simulation
-    checkSyntax(code) {
-        const lines = code.split('\n');
-        let openBraces = 0;
-
-        if (!code.includes("#include <stdio.h>")) {
-            return `main.c:1:1: warning: implicit declaration of header 'stdio.h'`;
-        }
-
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i].trim();
-            if (line === "" || line.startsWith("#") || line.startsWith("//") || line.endsWith("{") || line.endsWith("}")) continue;
-            
-            // Check missing semicolon
-            if (line.length > 0 && !line.endsWith(";") && !line.includes("int main") && !line.includes("if")) {
-                return `main.c:${i + 1}:${line.length}: error: expected ';' before end of line`;
-            }
-        }
-
-        // Bracket matching
-        const opens = (code.match(/{/g) || []).length;
-        const closes = (code.match(/}/g) || []).length;
-        if (opens !== closes) {
-            return `main.c: error: mismatched braces { ... }`;
-        }
-
-        return null; // No errors
+    handleUpload(input) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            this.files.push({ name: file.name, content: e.target.result });
+            this.renderTabs();
+            this.switchTab(this.files.length - 1);
+            this.closeModal();
+        };
+        reader.readAsText(file);
     },
 
-    run() {
-        const code = this.editor.value;
-        this.outputBox.innerHTML = "Compiling main.c...<br>Running program...<br>--------------------<br>";
-        this.variables = {};
-        
-        const error = this.checkSyntax(code);
-        if (error) {
-            this.outputBox.innerHTML += `<span style="color: #f43f5e;">${error}</span>`;
-            return;
-        }
-
-        this.executeCode(code);
+    renderTabs() {
+        const bar = document.getElementById('tab-bar');
+        const tabsHTML = this.files.map((f, i) => `
+            <div class="tab ${i === this.activeIdx ? 'active' : ''}" onclick="FileManager.switchTab(${i})">
+                ${f.name}
+            </div>
+        `).join('');
+        bar.innerHTML = tabsHTML + `<button class="add-tab-btn" onclick="FileManager.openNewFileModal()">+</button>`;
     },
 
-    async executeCode(code) {
-        const lines = code.split('\n');
-        for (let line of lines) {
-            line = line.trim();
-
-            // Handle printf
-            if (line.startsWith("printf")) {
-                const match = line.match(/"([^"]+)"/);
-                if (match) {
-                    let text = match[1].replace(/\\n/g, '<br>');
-                    this.print(text);
-                }
-            }
-
-            // Handle scanf (The Input System)
-            if (line.startsWith("scanf")) {
-                this.print('<span style="color: #38bdf8;">▋ </span>'); // Input cursor
-                const userInput = await this.waitForInput();
-                this.print(`<span style="color: #fbbf24;">${userInput}</span><br>`);
-            }
-        }
-        this.print("<br>--------------------<br>Process finished with exit code 0");
-    },
-
-    print(text) {
-        this.outputBox.innerHTML += text;
-        this.outputBox.scrollTop = this.outputBox.scrollHeight;
-    },
-
-    waitForInput() {
-        this.isWaitingForInput = true;
-        return new Promise((resolve) => {
-            const handleKey = (e) => {
-                if (e.key === "Enter") {
-                    window.removeEventListener("keydown", handleKey);
-                    let val = this.tempInputBuffer || "0";
-                    this.tempInputBuffer = "";
-                    this.isWaitingForInput = false;
-                    resolve(val);
-                } else if (e.key.length === 1) {
-                    this.tempInputBuffer = (this.tempInputBuffer || "") + e.key;
-                    this.outputBox.innerHTML += e.key; // Show typing in terminal
-                }
-            };
-            window.addEventListener("keydown", handleKey);
-        });
+    switchTab(idx) {
+        // Save current content
+        this.files[this.activeIdx].content = document.getElementById('code-editor').value;
+        // Switch
+        this.activeIdx = idx;
+        document.getElementById('code-editor').value = this.files[idx].content;
+        this.renderTabs();
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    Compiler.init('code-editor', 'output-console');
-    document.getElementById('run-button').onclick = () => Compiler.run();
-
-    // Tab key support
-    document.getElementById('code-editor').addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const start = this.selectionStart;
-            this.value = this.value.substring(0, start) + "    " + this.value.substring(this.selectionEnd);
-            this.selectionStart = this.selectionEnd = start + 4;
+const Compiler = {
+    run() {
+        const output = document.getElementById('output-console');
+        output.innerHTML = "Compiling " + FileManager.files[FileManager.activeIdx].name + "...<br>Running...<br>------------------<br>";
+        
+        // Simulating logic execution based on active editor
+        const code = document.getElementById('code-editor').value;
+        if(code.includes('printf')) {
+            const match = code.match(/printf\("(.*)"\)/);
+            output.innerHTML += match ? match[1] : "Execution error";
         }
-    });
-});
+        output.innerHTML += "<br>------------------<br>Process finished.";
+    }
+};
 
+const Printer = {
+    openModal() { document.getElementById('print-modal').style.display = 'block'; },
+    closeModal() { document.getElementById('print-modal').style.display = 'none'; },
+    executePrint() {
+        let content = `<div style="padding:20px; font-family:monospace;"><h1>CODETYPO REPORT</h1>`;
+        if(document.getElementById('print-code-check').checked) {
+            content += `<h3>CODE:</h3><pre>${document.getElementById('code-editor').value}</pre>`;
+        }
+        if(document.getElementById('print-output-check').checked) {
+            content += `<h3>OUTPUT:</h3><pre>${document.getElementById('output-console').innerText}</pre>`;
+        }
+        document.getElementById('printable-area').innerHTML = content;
+        window.print();
+        this.closeModal();
+    }
+};
+
+// Handle closing modals by clicking outside
+window.onclick = function(event) {
+    if (event.target.className === 'modal') {
+        event.target.style.display = "none";
+    }
+}

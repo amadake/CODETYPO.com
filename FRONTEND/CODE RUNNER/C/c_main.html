@@ -2,62 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>C IDE | CODETYPO.com</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>C IDE | CODETYPO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="compiler_styles.css">
 </head>
 <body>
 
     <header>
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <a href="/FRONTEND/CODE RUNNER/HOME/home_page_all_lang.html" style="color:var(--accent-blue); text-decoration:none; border:1px solid #334155; padding:5px 12px; border-radius:4px; font-family: var(--mono-font);">&lt; exit</a>
+        <div class="header-left">
+            <a href="#" class="exit-btn">&lt; exit</a>
             <div class="logo">CODETYPO<span>.c</span></div>
         </div>
         
         <div class="header-actions">
-        <button onclick="HTMLEditor.run()" class="btn-update">▶ UPDATE PREVIEW</button>
-        <button onclick="HTMLEditor.startPractice()" class="btn-practice">⚡ PRACTICE</button>
-        <button onclick="HTMLEditor.printPDF()" class="btn-print">⎙ PRINT PDF</button>>
-    </div>
-
-        
-        <div style="font-family: var(--mono-font); font-size: 12px; color: var(--accent-green);">
-            SYSTEM: ONLINE
+            <button onclick="Compiler.run()" class="btn-update">▶ RUN CODE</button>
+            <button class="btn-practice">⚡ PRACTICE</button>
+            <button onclick="Printer.openModal()" class="btn-print">⎙ PRINT PDF</button>
         </div>
+        
+        <div class="header-status">STATUS: <span style="color:var(--accent-green)">ACTIVE</span></div>
     </header>
 
-    <main class="main-content" style="display: flex; gap: 25px; padding: 30px; flex: 1;">
-        <!-- PANEL 1: EDITOR -->
-        <div class="panel" style="flex: 1; display: flex; flex-direction: column; background: #0b1120; border-radius: 12px; border: 1px solid #334155; overflow: hidden;">
-            <div class="panel-header" style="background: #1e293b; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155;">
-                <div style="display: flex; gap: 8px;">
-                    <div style="width:12px; height:12px; border-radius:50%; background:#f43f5e;"></div>
-                    <div style="width:12px; height:12px; border-radius:50%; background:#fbbf24;"></div>
-                    <div style="width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
+    <main class="main-content">
+        <!-- LEFT PANEL: EDITOR -->
+        <div class="panel">
+            <div class="panel-header">
+                <div class="header-controls">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
                 </div>
-                <span style="font-family: 'Fira Code'; font-size: 12px; color: #94a3b8;">main.c</span>
+                
+                <!-- TAB SYSTEM -->
+                <div class="tab-bar" id="tab-bar">
+                    <div class="tab active" onclick="TabManager.switchTab(0)">
+                        <span class="tab-name">main.c</span>
+                    </div>
+                    <button class="add-tab-btn" onclick="FileManager.openNewFileModal()">+</button>
+                </div>
+
+                <span class="panel-label">SOURCE_CODE</span>
             </div>
             <textarea id="code-editor" spellcheck="false">#include <stdio.h>
 
 int main() {
-    int age;
-    printf("Enter your age: ");
-    scanf("%d", &age);
-    printf("You are %d years old.\n", age);
+    printf("Hello Codetypo!");
     return 0;
 }</textarea>
         </div>
 
-        <!-- PANEL 2: TERMINAL -->
-        <div class="panel" style="flex: 1; display: flex; flex-direction: column; background: #000; border-radius: 12px; border: 1px solid #334155; overflow: hidden;">
-            <div class="panel-header" style="background: #1e293b; padding: 10px 20px; color: #fff; font-family: 'Fira Code'; font-size: 12px; border-bottom: 1px solid #334155;">
-                TERMINAL
+        <!-- RIGHT PANEL: TERMINAL -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-label" style="margin-left: 0;">TERMINAL_OUTPUT</span>
+                <div class="expand-icon">⛶</div>
             </div>
-            <div id="output-console" style="flex: 1; padding: 20px; color: #10b981; font-family: 'Fira Code'; font-size: 15px; overflow-y: auto; line-height: 1.5;">
-                Click RUN to compile code...
-            </div>
+            <div id="output-console">Click RUN to compile code...</div>
         </div>
     </main>
+
+    <!-- NEW FILE / UPLOAD MODAL (Matched to your screenshot) -->
+    <div id="file-modal" class="modal">
+        <div class="modal-content themed-modal">
+            <h2 class="modal-title">Create New File</h2>
+            <p class="modal-subtitle">Enter a name for your new C file:</p>
+            
+            <input type="text" id="new-file-name" class="modal-input" placeholder="filename.c">
+            
+            <button onclick="FileManager.createNewFile()" class="modal-action-btn">Create Empty File</button>
+            
+            <div class="modal-separator">OR</div>
+            
+            <p class="modal-subtitle">Upload a file from your system:</p>
+            <label class="upload-dropzone">
+                <input type="file" id="file-upload" hidden onchange="FileManager.handleUpload(this)">
+                <span class="folder-icon">📁</span> Choose C File
+            </label>
+
+            <button onclick="FileManager.closeModal()" class="modal-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <!-- PRINT MODAL (Matched Theme) -->
+    <div id="print-modal" class="modal">
+        <div class="modal-content themed-modal">
+            <h2 class="modal-title">Print Settings</h2>
+            <p class="modal-subtitle">Select parts to include in PDF:</p>
+            
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="print-code-check" checked>
+                <span class="custom-checkbox"></span> Source Code
+            </label>
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="print-output-check" checked>
+                <span class="custom-checkbox"></span> Terminal Output
+            </label>
+
+            <button onclick="Printer.executePrint()" class="modal-action-btn" style="background: var(--accent-gold); color: black;">Generate PDF</button>
+            <button onclick="Printer.closeModal()" class="modal-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div id="printable-area"></div>
 
     <script src="compiler_logic.js"></script>
 </body>

@@ -1,173 +1,102 @@
 :root {
-    --bg-dark: #0f172a;
-    --sidebar-dark: #1e293b;
-    --editor-bg: #0b1120;
-    --terminal-bg: #000000;
-    --accent-blue: #38bdf8;
-    --accent-green: #10b981;
-    --border-color: #334155;
+    --bg-dark: #0d1117;
+    --panel-bg: #0d1117;
+    --header-bg: #161b22;
+    --border-color: #30363d;
+    --accent-blue: #58a6ff;
+    --accent-green: #2ea44f;
+    --accent-purple: #7c3aed;
+    --accent-gold: #eab308;
+    --text-main: #c9d1d9;
     --mono-font: 'Fira Code', monospace;
 }
 
 body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-dark);
-    color: #f1f5f9;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    margin: 0; background: var(--bg-dark); color: var(--text-main);
+    font-family: 'Montserrat', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden;
 }
 
-/* --- HEADER (MATCHED TO LEVEL PAGE) --- */
+/* --- HEADER --- */
 header {
-    background-color: var(--sidebar-dark);
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.logo { font-size: 22px; font-weight: 800; font-family: var(--mono-font); text-decoration: none; color: white; }
-.logo span { color: var(--accent-blue); }
-
-.run-btn {
-    background-color: var(--accent-green);
-    color: #064e3b;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 6px;
-    font-weight: 800;
-    font-family: var(--mono-font);
-    cursor: pointer;
-    box-shadow: 0 4px 0 #065f46;
-}
-
-/* --- WORKSPACE LAYOUT (SEPARATED SCREENS) --- */
-.main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    gap: 30px; /* This creates the "Line" or gap between screens */
-}
-
-.panel {
-    flex: 1;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    background: var(--editor-bg);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    overflow: hidden;
-}
-
-.panel-header {
-    background: var(--sidebar-dark);
-    padding: 12px 20px;
-    font-size: 12px;
-    font-family: var(--mono-font);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: var(--header-bg); padding: 10px 20px;
+    display: flex; justify-content: space-between; align-items: center;
     border-bottom: 1px solid var(--border-color);
 }
-
-/* --- TEXT AREA & CONSOLE --- */
-#code-editor, #output-console {
-    flex: 1;
-    padding: 25px;
-    font-family: var(--mono-font);
-    font-size: 16px;
-    line-height: 1.6;
-    outline: none;
-    border: none;
-    resize: none;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Hide for Firefox */
+.exit-btn {
+    border: 1px solid var(--border-color); color: var(--accent-blue);
+    padding: 5px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold;
 }
+.logo { font-family: var(--mono-font); font-weight: 800; font-size: 18px; }
+.logo span { color: #f78166; }
 
-/* Hide scrollbar for Chrome/Safari */
-#code-editor::-webkit-scrollbar, #output-console::-webkit-scrollbar {
-    display: none;
-}
-
-#code-editor {
-    background: var(--editor-bg);
-    color: #cbd5e1;
-}
-
-#output-console {
-    background: var(--terminal-bg);
-    color: var(--accent-green);
-    white-space: pre-wrap;
-}
-
-/* Mac dots */
-.dots { display: flex; gap: 8px; }
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-
-
-/* --- HEADER BUTTON GROUP --- */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
+.header-actions { display: flex; gap: 12px; }
 .header-actions button {
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    transition: all 0.2s ease;
+    border: none; padding: 8px 18px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 12px;
 }
+.btn-update { background: var(--accent-green); color: white; }
+.btn-practice { background: var(--accent-purple); color: white; }
+.btn-print { background: var(--accent-gold); color: black; }
 
-.btn-update {
-    background: var(--accent-green);
-    color: #064e3b;
+/* --- PANELS & TABS --- */
+.main-content { display: flex; gap: 15px; padding: 15px; flex: 1; overflow: hidden; }
+.panel { flex: 1; display: flex; flex-direction: column; border: 1px solid var(--border-color); border-radius: 8px; background: var(--panel-bg); overflow: hidden; }
+
+.panel-header {
+    background: #161b22; padding: 0 15px; height: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
 }
+.header-controls { display: flex; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
 
-.btn-update:hover {
-    background: #34d399;
-    transform: translateY(-1px);
+.tab-bar { display: flex; flex: 1; margin-left: 20px; height: 100%; align-items: flex-end; }
+.tab {
+    padding: 8px 20px; background: #0d1117; border: 1px solid var(--border-color);
+    border-bottom: none; border-radius: 6px 6px 0 0; font-size: 12px;
+    cursor: pointer; color: #8b949e; margin-right: 4px;
 }
+.tab.active { background: #161b22; color: var(--accent-blue); border-top: 2px solid var(--accent-blue); }
+.add-tab-btn { background: none; border: none; color: var(--accent-green); font-size: 20px; cursor: pointer; padding-bottom: 5px; }
 
-.btn-practice {
-    background: var(--accent-indigo);
-    color: white;
-    box-shadow: 0 3px 0 #4338ca;
+.panel-label { font-size: 11px; color: #f78166; font-weight: bold; font-family: var(--mono-font); }
+
+#code-editor, #output-console {
+    flex: 1; padding: 20px; font-family: var(--mono-font); font-size: 14px;
+    background: transparent; border: none; outline: none; color: #d1d5db; resize: none;
 }
+#output-console { color: var(--accent-green); white-space: pre-wrap; background: #010409; }
 
-.btn-practice:hover {
-    background: #818cf8;
-    transform: translateY(-1px);
+/* --- MODALS (Match your screenshot) --- */
+.modal { display: none; position: fixed; z-index: 99; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+.themed-modal {
+    background: #161b22; width: 400px; margin: 10% auto; padding: 30px;
+    border-radius: 12px; border: 1px solid var(--border-color); text-align: center;
 }
+.modal-title { color: var(--accent-blue); font-size: 20px; margin-bottom: 5px; }
+.modal-subtitle { color: #8b949e; font-size: 13px; margin-bottom: 15px; }
 
-.btn-print {
-    background: var(--accent-gold) !important;
-    color: #422006 !important;
-    box-shadow: 0 3px 0 #a16207;
+.modal-input {
+    width: 100%; padding: 10px; background: #0d1117; border: 1px solid var(--accent-blue);
+    border-radius: 6px; color: white; margin-bottom: 20px; box-sizing: border-box;
 }
-
-.btn-print:hover {
-    background: #fde047 !important;
-    transform: translateY(-1px);
+.modal-action-btn {
+    width: 100%; padding: 10px; background: white; color: black; border: none;
+    border-radius: 4px; font-weight: bold; cursor: pointer; margin-bottom: 10px;
 }
+.modal-separator { margin: 15px 0; color: #8b949e; font-size: 12px; display: flex; align-items: center; }
+.modal-separator::before, .modal-separator::after { content: ""; flex: 1; height: 1px; background: var(--border-color); margin: 0 10px; }
 
-.header-status {
-    color: var(--accent-green);
-    font-family: var(--mono-font);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
+.upload-dropzone {
+    display: block; border: 2px dashed var(--accent-blue); padding: 20px;
+    border-radius: 8px; cursor: pointer; color: var(--accent-blue); font-weight: bold; margin-bottom: 20px;
+}
+.modal-cancel { background: none; border: none; color: #8b949e; cursor: pointer; text-decoration: underline; }
+
+/* --- PRINT AREA --- */
+@media print {
+    body * { visibility: hidden; }
+    #printable-area, #printable-area * { visibility: visible; }
 }
