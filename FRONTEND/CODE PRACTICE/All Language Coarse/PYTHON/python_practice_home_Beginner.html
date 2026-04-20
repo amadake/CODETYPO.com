@@ -2,398 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C Curriculum | CODETYPO.com</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f172a;           /* Deep background */
-            --sidebar-dark: #1e293b;      /* Slate panels */
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --code-blue: #38bdf8;
-            --code-green: #10b981;
-            --code-yellow: #facc15;
-            --btn-gold: #f3ce7a;
-            --btn-gold-shadow: #d4ae5a;
-            --mono-font: 'Fira Code', monospace;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding-top: 280px; 
-            transition: padding-top 0.4s ease;
-        }
-        
-        body.scrolled { padding-top: 160px; }
-
-        /* --- DYNAMIC HEADER --- */
-        header {
-            background-color: var(--sidebar-dark);
-            padding: 40px 5% 60px 5%;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s ease;
-        }
-
-        header.shrink { padding: 12px 5%; background-color: rgba(30, 41, 59, 0.95); backdrop-filter: blur(10px); }
-
-        .logo { 
-            font-size: 32px; font-weight: 800; letter-spacing: -1px; 
-            cursor: pointer; transition: 0.4s; text-decoration: none; color: white;
-            font-family: var(--mono-font);
-        }
-        header.shrink .logo { font-size: 22px; }
-        .logo span { color: var(--code-blue); }
-
-        .nav-container {
-            background-color: var(--bg-dark);
-            border-radius: 8px; display: flex; align-items: center;
-            padding: 5px 15px; border: 1px solid #334155; transition: 0.4s;
-        }
-        header.shrink .nav-container { padding: 2px 10px; }
-        .nav-link { 
-            color: var(--text-dim); text-decoration: none; padding: 10px 15px; 
-            font-weight: 600; font-size: 14px; font-family: var(--mono-font);
-        }
-        header.shrink .nav-link { font-size: 12px; }
-        .separator { width: 1px; height: 20px; background: #334155; margin: 0 5px; }
-
-        /* --- STATS BAR & SHRINKING ELEMENTS --- */
-        .stats-wrapper {
-            position: fixed;
-            top: 160px; 
-            left: 0; right: 0;
-            z-index: 1100;
-            transition: all 0.4s ease;
-        }
-
-        header.shrink + .stats-wrapper { top: 60px; }
-
-        .stats-bar {
-            background: var(--sidebar-dark);
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-radius: 12px;
-            height: 85px;
-            border: 1px solid #334155;
-            transition: height 0.4s ease;
-        }
-
-        /* Profile dynamics */
-        .profile-pic {
-            width: 130px; height: 130px;
-            background: var(--bg-dark); border-radius: 12px;
-            border: 4px solid var(--sidebar-dark); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            overflow: hidden; 
-            margin-top: -65px; 
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.4s ease;
-        }
-
-        header.shrink + .stats-wrapper .profile-pic {
-            width: 60px; height: 60px; margin-top: 0;
-            border-width: 2px;
-        }
-
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
-
-        .rank-tag { 
-            background: rgba(56, 189, 248, 0.1); color: var(--code-blue); 
-            padding: 4px 12px; border-radius: 4px; font-weight: bold; 
-            font-family: var(--mono-font); font-size: 13px; border: 1px solid var(--code-blue);
-        }
-        
-        .stat-item { display: flex; align-items: center; gap: 10px; }
-        .stat-item .val { font-size: 22px; font-weight: bold; font-family: var(--mono-font); color: white; }
-        .stat-item .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-family: var(--mono-font); }
-
-        /* Daily Goal Box dynamics */
-        .daily-goal-box {
-            background: var(--bg-dark); width: 130px; height: 130px;
-            border-radius: 12px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border: 1px solid #334155;
-            margin-top: -65px;
-            transition: all 0.4s ease;
-        }
-
-        header.shrink + .stats-wrapper .daily-goal-box {
-            width: 60px; height: 60px; margin-top: 0;
-        }
-
-        .goal-time { font-size: 24px; font-weight: bold; color: var(--code-yellow); font-family: var(--mono-font); transition: font-size 0.4s; }
-        header.shrink + .stats-wrapper .goal-time { font-size: 12px; }
-
-        .goal-sub { font-size: 9px; color: var(--text-dim); font-family: var(--mono-font); text-transform: uppercase; transition: 0.4s; }
-        header.shrink + .stats-wrapper .goal-sub { display: none; }
-
-        /* --- SIDEBAR (FILE EXPLORER STYLE) --- */
-        .main-content { max-width: 1400px; margin: 40px auto; display: flex; padding: 0 20px; align-items: flex-start; gap: 30px; }
-        
-        .sidebar { width: 300px; flex-shrink: 0; position: sticky; top: 160px; }
-        .sidebar-title { font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; margin: 0 0 15px 10px; font-family: var(--mono-font); }
-        .sidebar-card { background: var(--sidebar-dark); border-radius: 8px; overflow: hidden; border: 1px solid #334155; }
-
-        .sidebar-item {
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #334155; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-dim);
-            text-decoration: none; transition: 0.2s; font-family: var(--mono-font);
-        }
-
-        .sidebar-item:hover { background: #1e293b; color: white; }
-
-        .sidebar-item.active {
-            background-color: var(--bg-dark); color: var(--code-blue); border-left: 3px solid var(--code-blue);
-        }
-
-        /* --- LESSON BOX (IDE WORKSPACE STYLE) --- */
-        .lesson-container {
-            flex-grow: 1; background-color: var(--sidebar-dark); border-radius: 12px;
-            padding: 40px; border: 1px solid #334155; position: relative;
-        }
-
-        .lesson-container::before {
-            content: "curriculum_map.json";
-            position: absolute; top: 0; left: 40px;
-            background: var(--bg-dark); padding: 5px 15px;
-            font-family: var(--mono-font); font-size: 11px; color: var(--text-dim);
-            border-radius: 0 0 4px 4px; border: 1px solid #334155; border-top: none;
-        }
-
-        .lesson-card {
-            background: var(--bg-dark); border-radius: 8px; padding: 25px; margin-bottom: 15px;
-            display: flex; align-items: center; transition: 0.2s; border: 1px solid #334155;
-        }
-        .lesson-card:hover { border-color: var(--code-blue); transform: translateX(5px); }
-        
-        .lvl-num { 
-            width: 45px; height: 45px; border: 1px solid #334155; border-radius: 6px; 
-            display: flex; align-items: center; justify-content: center; 
-            font-weight: 700; color: var(--text-dim); margin-right: 25px; 
-            font-family: var(--mono-font); font-size: 18px;
-        }
-        
-        .start-btn { 
-            background-color: var(--btn-gold); color: #453715; 
-            padding: 12px 30px; border-radius: 6px; border: none; 
-            font-weight: 800; cursor: pointer; text-decoration: none; 
-            font-size: 14px; text-transform: uppercase; 
-            box-shadow: 0 4px 0 var(--btn-gold-shadow);
-            font-family: var(--mono-font);
-        }
-        .btn-locked { 
-            background: #334155; color: #475569; box-shadow: none; cursor: not-allowed;
-        }
-
-        .lesson-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
-        .lesson-desc { font-size: 13px; color: var(--text-dim); font-family: var(--mono-font); }
-
-    </style>
+    <title>Beginner Curriculum | CODETYPO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="python_home_page.css">
 </head>
 <body>
-
+    <!-- Header and Stats Bar (Copy from your original) -->
     <header id="mainHeader">
         <a href="#" class="logo">CODETYPO<span>.com</span></a>
         <div class="nav-container">
-            <a href="c_practice_home.html" class="nav-link" style="color: var(--code-yellow);">lessons.list()</a>
-            <a href="c_run_test.html" class="nav-link">run_tests()</a>
-            <a href="c_play_games.html" class="nav-link">play_games()</a>
-            <div class="nav-link">progress.view()</div>
-            <a href="c_themes.html" class="nav-link">themes.cfg</a>
-            <div class="separator"></div>
+            <a href="#" class="nav-link" style="color: var(--code-yellow);">lessons.list()</a>
             <div class="separator"></div>
             <div class="nav-link" style="color: white;">aatish@root ▾</div>
         </div>
     </header>
 
-    <div class="stats-wrapper">
-        <div class="stats-bar">
-            <div style="display: flex; align-items: center;">
-                <div class="profile-pic">
-                    <img src="Screenshot_20260403_023124.jpg.jpeg" alt="User">
-                </div>
-                <div style="margin-left: 20px;">
-                    <span class="rank-tag">level: seed_ling_1</span>
-                    <div style="font-family: var(--mono-font); font-size: 11px; color: var(--text-dim); margin-top: 5px;">
-                        exp_to_next: 5,180
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-item">
-                <span style="font-size: 24px;">⚡</span>
-                <div><div class="label">velocity</div><div class="val">38 <small style="font-size: 12px; color: var(--text-dim);">wpm</small></div></div>
-            </div>
-
-            <div class="stat-item">
-                <span style="font-size: 24px;">🎯</span>
-                <div><div class="label">accuracy</div><div class="val">94%</div></div>
-            </div>
-
-            <div class="stat-item">
-                <span style="font-size: 24px;">🕒</span>
-                <div><div class="label">uptime</div><div class="val">10:01</div></div>
-            </div>
-
-            <div class="daily-goal-box">
-                <div class="goal-sub">daily_target</div>
-                <div class="goal-time">00:00</div>
-                <div class="goal-sub">/15:00</div>
-            </div>
-        </div>
-    </div>
+    <!-- Stats Wrapper (Include here) -->
 
     <div class="main-content">
         <aside class="sidebar">
-    <!-- First Block -->
-    <div class="sidebar-title"></div>
-    <div class="sidebar-card">
-        <div class="sidebar-item active">Beginner.py <span>▶</span></div>
-         <a href="python_practice_home_Intermidate.html" class="sidebar-item">Intermediate.py <span>▶</span></a>
-        <a href="python_practice_home_Advanced.html" class="sidebar-item">Advanced.py <span>▶</span></a>
-    </div>
+            <div class="sidebar-card">
+                <a href="beginner.html" class="sidebar-item active">Beginner.c <span>▶</span></a>
+                <a href="intermediate.html" class="sidebar-item">Intermediate.c <span>▶</span></a>
+                <a href="advanced.html" class="sidebar-item">Advanced.c <span>▶</span></a>
+            </div>
+        </aside>
 
-    <!-- New Custom Block -->
-    <div class="sidebar-title"></div>
-    <div class="sidebar-card">
-        <a href="#" class="sidebar-item">Custom Code <span>▶</span></a>
-    </div>
-</aside>
-
-       <main class="lesson-container">
-            <h2 style="color: white; font-size: 24px; margin-bottom: 30px; font-family: var(--mono-font);">
-                <span style="color: var(--code-blue);">fetch</span> Beginner_Python_Lessons
-            </h2>
-
-            <!-- Level 01 -->
+        <main class="lesson-container">
+            <h2 style="font-family: var(--mono-font);"><span style="color: var(--code-blue);">fetch</span> Beginner_C_Lessons</h2>
+            <!-- Lesson Cards Go Here -->
             <div class="lesson-card">
                 <div class="lvl-num">01</div>
                 <div style="flex-grow: 1;">
-                    <div class="lesson-title">C Programming Basics – Hello World</div>
-                    <div class="lesson-desc">#include, main(), printf</div>
+                    <div class="lesson-title">Hello World</div>
+                    <div class="lesson-desc">Basics of C output</div>
                 </div>
-                <a href="level_1_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 02 -->
-            <div class="lesson-card">
-                <div class="lvl-num">02</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Formatted Output</div>
-                    <div class="lesson-desc">printf, \n, text formatting</div>
-                </div>
-                <a href="level_2_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 03 -->
-            <div class="lesson-card">
-                <div class="lvl-num">03</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Variables & Math</div>
-                    <div class="lesson-desc">int, variables, arithmetic</div>
-                </div>
-                <a href="level_3_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 04 -->
-            <div class="lesson-card">
-                <div class="lvl-num">04</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">User Input</div>
-                    <div class="lesson-desc">scanf, user input</div>
-                </div>
-                <a href="level_4_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 05 -->
-            <div class="lesson-card">
-                <div class="lvl-num">05</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">If Else</div>
-                    <div class="lesson-desc">conditions, even/odd.</div>
-                </div>
-                <a href="level_5_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 06 -->
-            <div class="lesson-card">
-                <div class="lvl-num">06</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">For Loop</div>
-                    <div class="lesson-desc">loops, multiplication table</div>
-                </div>
-                <a href="level_6_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 07 -->
-            <div class="lesson-card">
-                <div class="lvl-num">07</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">While Loop</div>
-                    <div class="lesson-desc">loop, factorial</div>
-                </div>
-                <a href="level_7_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 08 -->
-            <div class="lesson-card">
-                <div class="lvl-num">08</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Arrays</div>
-                    <div class="lesson-desc">arrays, sum, average</div>
-                </div>
-                <a href="level_8_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 09 -->
-            <div class="lesson-card">
-                <div class="lvl-num">09</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Functions</div>
-                    <div class="lesson-desc">functions, return values.</div>
-                </div>
-                <a href="level_9_python.html" class="start-btn">Execute »</a>
-            </div>
-
-            <!-- Level 10 -->
-            <div class="lesson-card">
-                <div class="lvl-num">10</div>
-                <div style="flex-grow: 1;">
-                    <div class="lesson-title">Switch Case</div>
-                    <div class="lesson-desc">menu driven program</div>
-                </div>
-                <a href="level_10_python.html" class="start-btn">Execute »</a>
+                <a href="#" class="start-btn">Execute »</a>
             </div>
         </main>
+    </div>
 
-    <script>
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shrink');
-                document.body.classList.add('scrolled');
-            } else {
-                header.classList.remove('shrink');
-                document.body.classList.remove('scrolled');
-            }
-        });
-    </script>
+    <script src="python_home_page.js"></script>
 </body>
 </html>
